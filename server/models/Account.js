@@ -25,4 +25,5 @@ AccountSchema.methods.joinClass = function joinClass(newClass) {
     this.save();
 }
 
-AccountSchema.methods.add
+const Account = mongoose.model(AccountSchema, 'Account');
+module.exports = Account;

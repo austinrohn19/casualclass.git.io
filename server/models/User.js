@@ -51,5 +51,5 @@ UserSchema.virtual('averageRating').get(function averageRating() {
     ) / this.userRatings.length;
 });
 
-const User = mongoose.model(User, 'User');
+const User = mongoose.model(UserSchema, 'User');
 module.exports = User;
