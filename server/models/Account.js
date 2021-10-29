@@ -1,4 +1,4 @@
-const mongoose, { Schema, SchemaTypes } = require('mongoose');
+const { Schema, SchemaTypes, model } = require('mongoose');
 
 const AccountSchema = new Schema({
     user: {

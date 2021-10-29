@@ -1,4 +1,4 @@
-const mongoose, { Schema, SchemaTypes } = require('mongoose');
+const { Schema, SchemaTypes, model } = require('mongoose');
 
 const UserRatingSchema = new Schema({
     userId: {
@@ -19,5 +19,5 @@ const UserRatingSchema = new Schema({
     }
 });
 
-const UserRating = mongoose.model(UserRatingSchema, 'UserRating');
+const UserRating = model(UserRatingSchema, 'UserRating');
 module.exports = UserRating;
