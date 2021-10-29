@@ -1,4 +1,4 @@
-const mongoose, { Schema, SchemaTypes } = require('mongoose');
+const { Schema, SchemaTypes, model } = require('mongoose');
 
 const ReviewSchema = new Schema({
     class: {
@@ -26,5 +26,5 @@ const ReviewSchema = new Schema({
     }
 });
 
-const Review = mongoose.model(ReviewSchema, 'Review');
+const Review = model(ReviewSchema, 'Review');
 module.exports = Review;
