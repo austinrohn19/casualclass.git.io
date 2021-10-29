@@ -1,4 +1,4 @@
-const mongoose, { Schema, SchemaTypes } = require('mongoose');
+const { Schema, SchemaTypes, model } = require('mongoose');
 
 const ClassSchema = new Schema({
     title: {
@@ -55,5 +55,5 @@ ClassSchema.methods.purchase = function purchase() {
     this.save();
 }
 
-const Class = mongoose.model(ClassSchema, 'Class');
+const Class = model(ClassSchema, 'Class');
 module.exports = Class;

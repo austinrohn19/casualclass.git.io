@@ -1,4 +1,4 @@
-const mongoose, { Schema, SchemaTypes } = require('mongoose');
+const { Schema, SchemaTypes, model } = require('mongoose');
 const bcrypt = require('bcrypt');
 
 const UserSchema = new Schema({
@@ -51,5 +51,5 @@ UserSchema.virtual('averageRating').get(function averageRating() {
     ) / this.userRatings.length;
 });
 
-const User = mongoose.model(User, 'User');
+const User = model(UserSchema, 'User');
 module.exports = User;
