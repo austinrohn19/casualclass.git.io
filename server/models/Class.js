@@ -5,6 +5,10 @@ const ClassSchema = new Schema({
         type: String,
         required: true
     },
+    author: {
+        type: SchemaTypes.ObjectId,
+        ref: 'User'
+    },
     description: {
         type: String,
         required: true
