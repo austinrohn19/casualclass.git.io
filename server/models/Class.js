@@ -28,8 +28,23 @@ const ClassSchema = new Schema({
     reviews: {
         type: SchemaTypes.ObjectId,
         ref: 'Review'
+    },
+    createdOn: {
+        type: Date,
+        default: Date.now
+    }
+},
+{
+    toJSON: {
+        virtuals: true
     }
 });
+
+ClassSchema.virtual('popularity').get(function popularity() {
+    return this.reviews.reduce(
+        (total, review) => total + review.rating
+    ) / this.reviews.length;
+})
 
 ClassSchema.methods.purchase = function purchase() {
     this.timesPurchased++;
