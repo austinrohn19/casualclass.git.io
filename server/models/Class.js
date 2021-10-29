@@ -25,10 +25,10 @@ const ClassSchema = new Schema({
         type: Number,
         required: true
     },
-    reviews: {
+    reviews: [{
         type: SchemaTypes.ObjectId,
         ref: 'Review'
-    },
+    }],
     createdOn: {
         type: Date,
         default: Date.now
