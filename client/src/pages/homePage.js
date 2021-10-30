@@ -1,7 +1,8 @@
 import React from 'react';
-import { Card, Form, Grid } from 'semantic-ui-react'
+import { Card, Grid } from 'semantic-ui-react'
 
 import LessonCard from '../components/lessonCard'
+import SearchForm from '../components/SearchForm'
 
 const homePage = () => {
 
@@ -51,32 +52,29 @@ const homePage = () => {
 
     return (
         <div>
-            <Grid columns='equal'>
-                <Grid.Column>
-                    <Card>
-                        <Card.Content>
-                            <Card.Group>
-                                {lessons.map(lessonInfo => {
-                                    return (
-                                        <LessonCard key={lessonInfo.title} lessonInfo={lessonInfo} />
-                                    )
-                                })}
-                            </Card.Group>
-                        </Card.Content>
-                    </Card>
-                </Grid.Column>
-                <Grid.Column>
-                    <Card fluid>
-                        <Card.Content>
-                            <Form>
-                                <Form.Group>
-                                    <Form.Input label="Search" placeholder="What do you want to learn?" />
-
-                                </Form.Group>
-                            </Form>
-                        </Card.Content>
-                    </Card>
-                </Grid.Column>
+            <Grid stackable columns='equal'>
+                <Grid.Row>
+                    <Grid.Column>
+                        <Card fluid>
+                            <Card.Content>
+                                <Card.Group>
+                                    {lessons.map(lessonInfo => {
+                                        return (
+                                            <LessonCard key={lessonInfo.title} lessonInfo={lessonInfo} />
+                                        )
+                                    })}
+                                </Card.Group>
+                            </Card.Content>
+                        </Card>
+                    </Grid.Column>
+                    <Grid.Column floated='right'>
+                        <Card fluid>
+                            <Card.Content>
+                                <SearchForm />
+                            </Card.Content>
+                        </Card>
+                    </Grid.Column>
+                </Grid.Row>
             </Grid>
         </div>
     )
