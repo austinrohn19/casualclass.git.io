@@ -69,5 +69,5 @@ UserSchema.methods.joinClass = function joinClass(newClass) {
     this.save();
 }
 
-const User = model(UserSchema, 'User');
+const User = model('User', UserSchema);
 module.exports = User;

@@ -7,7 +7,7 @@ const ReviewSchema = new Schema({
         required: true
     },
     author: {
-        type: SchemaTypes.User,
+        type: SchemaTypes.ObjectId,
         ref: 'User',
         required: true
     },
@@ -26,5 +26,5 @@ const ReviewSchema = new Schema({
     }
 });
 
-const Review = model(ReviewSchema, 'Review');
+const Review = model('Review', ReviewSchema);
 module.exports = Review;

@@ -54,5 +54,5 @@ ClassSchema.methods.purchase = function purchase() {
     this.save();
 }
 
-const Class = model(ClassSchema, 'Class');
+const Class = model('Class', ClassSchema);
 module.exports = Class;

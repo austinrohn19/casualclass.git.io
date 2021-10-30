@@ -19,5 +19,5 @@ const UserRatingSchema = new Schema({
     }
 });
 
-const UserRating = model(UserRatingSchema, 'UserRating');
+const UserRating = model('UserRating', UserRatingSchema);
 module.exports = UserRating;
