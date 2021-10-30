@@ -10,9 +10,9 @@ const { signToken } = require('../utils/auth');
 
 
 const resolvers = {
-    Query: {
+    // Query: {
 
-    },
+    // },
 
     Mutation: {
         // User model mutations
@@ -45,6 +45,8 @@ const resolvers = {
             const user = await User.findOne({ userId });
 
             user.joinClass(joinedClass);
+
+            return joinedClass;
         },
 
         // User rating mutation
@@ -54,6 +56,8 @@ const resolvers = {
             const ratedUser = await User.findOne({ ratedUserId });
 
             ratedUser.addUserRating(userRating);
+
+            return ratedUser;
         },
 
         // Class mutations
