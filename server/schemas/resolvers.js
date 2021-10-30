@@ -58,8 +58,8 @@ const resolvers = {
 
         // Class mutations
         
-
-
+        // Review mutations
+        
     }
 };
 
