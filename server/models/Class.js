@@ -27,7 +27,6 @@ const ClassSchema = new Schema({
     },
     timesPurchased: {
         type: Number,
-        required: true
     },
     reviews: [{
         type: SchemaTypes.ObjectId,
