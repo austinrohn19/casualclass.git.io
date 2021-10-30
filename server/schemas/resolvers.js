@@ -40,6 +40,13 @@ const resolvers = {
             return { token, user };
         },
 
+        joinClass: async (parent, { userId, classId }) => {
+            const joinedClass = await Class.findOne({ classId });
+            const user = await User.findOne({ userId });
+
+            user.joinClass(joinedClass);
+        },
+
         // User rating mutation
         rateUser: async (parent, { userId, ratedUserId, value }) => {
             const userRating = await UserRating.create({ userId, ratedUserId, value });
@@ -47,7 +54,10 @@ const resolvers = {
             const ratedUser = await User.findOne({ ratedUserId });
 
             ratedUser.addUserRating(userRating);
-        }
+        },
+
+        // Class mutations
+        
 
 
     }
