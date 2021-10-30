@@ -5,10 +5,10 @@ const typeDefs = gql`
         _id: ID
         username: String
         email: String
-        password: String
         userRatings: [UserRating]
         createdClasses: [Class]
         joinedClasses: [Class]
+        averageRating: Float
     }
     
     type UserRating {
@@ -28,6 +28,7 @@ const typeDefs = gql`
         timesPurchased: Int
         reviews: [Review]
         createdOn: Int
+        popularity: Float
     }
 
     type Review {
@@ -43,8 +44,8 @@ const typeDefs = gql`
     }
 
     type Auth {
-        token: ID!
-        profile: Profile
+        token: String
+        user: User
     }
 
     type Query {
