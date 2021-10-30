@@ -1,6 +1,5 @@
 const { AuthenticationError } = require('apollo-server-express');
 const { 
-    Account,
     User,
     UserRating,
     Class,
