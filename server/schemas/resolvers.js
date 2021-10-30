@@ -16,6 +16,7 @@ const resolvers = {
     },
 
     Mutation: {
+        // User model mutations
         createUser: async (parent, { username, email, password }) => {
             const user = await User.create({ username, email, password });
             const token = signToken(user);
@@ -24,7 +25,7 @@ const resolvers = {
         },
 
         login: async (parent, { email, password }) => {
-            const user = await User.findone({ email });
+            const user = await User.findOne({ email });
 
             if(!user) {
                 throw new AuthenticationError('No user with this email found!');
@@ -39,6 +40,15 @@ const resolvers = {
             const token = signToken(user);
             return { token, user };
         },
+
+        // User rating mutation
+        rateUser: async (parent, { userId, ratedUserId, value }) => {
+            const userRating = await UserRating.create({ userId, ratedUserId, value });
+
+            const ratedUser = await User.findOne({ ratedUserId });
+
+            ratedUser.addUserRating(userRating);
+        }
 
 
     }
