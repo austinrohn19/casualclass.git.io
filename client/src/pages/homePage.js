@@ -45,38 +45,143 @@ const homePage = () => {
             tags: ['Easy', 'Bad', 'guitar'],
             purchases: 15
 
+        },
+        {
+            title: 'Test Class 2',
+            description: 'This is a test description of a class.',
+            author: 'Austin',
+            reviews: [],
+            reviewScore: 5,
+            videos: {
+                preview: ["test.test.com"],
+                full: ['test.test.com'],
+            },
+            images: {
+                preview: [],
+                all: [],
+            },
+            cost: 5.00,
+            category: "Music",
+            tags: ['Easy', 'Bad', 'guitar'],
+            purchases: 15
+
+        },
+        {
+            title: 'Test Class 2',
+            description: 'This is a test description of a class.',
+            author: 'Austin',
+            reviews: [],
+            reviewScore: 5,
+            videos: {
+                preview: ["test.test.com"],
+                full: ['test.test.com'],
+            },
+            images: {
+                preview: [],
+                all: [],
+            },
+            cost: 5.00,
+            category: "Music",
+            tags: ['Easy', 'Bad', 'guitar'],
+            purchases: 15
+
+        },
+        {
+            title: 'Test Class 2',
+            description: 'This is a test description of a class.',
+            author: 'Austin',
+            reviews: [],
+            reviewScore: 5,
+            videos: {
+                preview: ["test.test.com"],
+                full: ['test.test.com'],
+            },
+            images: {
+                preview: [],
+                all: [],
+            },
+            cost: 5.00,
+            category: "Music",
+            tags: ['Easy', 'Bad', 'guitar'],
+            purchases: 15
+
+        },
+        {
+            title: 'Test Class 2',
+            description: 'This is a test description of a class.',
+            author: 'Austin',
+            reviews: [],
+            reviewScore: 5,
+            videos: {
+                preview: ["test.test.com"],
+                full: ['test.test.com'],
+            },
+            images: {
+                preview: [],
+                all: [],
+            },
+            cost: 5.00,
+            category: "Music",
+            tags: ['Easy', 'Bad', 'guitar'],
+            purchases: 15
+
+        }, {
+            title: 'Test Class 2',
+            description: 'This is a test description of a class.',
+            author: 'Austin',
+            reviews: [],
+            reviewScore: 5,
+            videos: {
+                preview: ["test.test.com"],
+                full: ['test.test.com'],
+            },
+            images: {
+                preview: [],
+                all: [],
+            },
+            cost: 5.00,
+            category: "Music",
+            tags: ['Easy', 'Bad', 'guitar'],
+            purchases: 15
+
+        },
+        {
+            title: 'Test Class 2',
+            description: 'This is a test description of a class.',
+            author: 'Austin',
+            reviews: [],
+            reviewScore: 5,
+            videos: {
+                preview: ["test.test.com"],
+                full: ['test.test.com'],
+            },
+            images: {
+                preview: [],
+                all: [],
+            },
+            cost: 5.00,
+            category: "Music",
+            tags: ['Easy', 'Bad', 'guitar'],
+            purchases: 15
+
         }
     ]
 
-
-
     return (
-        <div>
-            <Grid stackable columns='equal'>
-                <Grid.Row>
-                    <Grid.Column>
-                        <Card fluid>
-                            <Card.Content>
-                                <Card.Group>
-                                    {lessons.map(lessonInfo => {
-                                        return (
-                                            <LessonCard key={lessonInfo.title} lessonInfo={lessonInfo} />
-                                        )
-                                    })}
-                                </Card.Group>
-                            </Card.Content>
-                        </Card>
-                    </Grid.Column>
-                    <Grid.Column floated='right'>
-                        <Card fluid>
-                            <Card.Content>
-                                <SearchForm />
-                            </Card.Content>
-                        </Card>
-                    </Grid.Column>
-                </Grid.Row>
-            </Grid>
-        </div>
+        <Grid reversed='mobile' stackable streched columns={2}>
+            <Grid.Column mobile={16} tablet={13} computer={13}>
+                <Card.Group>
+                    {lessons.map((lessonInfo, index) => {
+                        return (
+                            <LessonCard key={index} lessonInfo={lessonInfo} />
+                        )
+                    })}
+                </Card.Group>
+            </Grid.Column>
+            <Grid.Column mobile={16} tablet={3} computer={3} floated='right'>
+                <SearchForm />
+            </Grid.Column>
+        </Grid>
     )
 }
 
