@@ -1,5 +1,5 @@
 import React from "react";
-import loginImg from "../../login.svg";
+import loginImg from "../../login.png";
 
 export class Register extends React.Component {
   constructor(props) {

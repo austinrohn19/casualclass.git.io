@@ -1,5 +1,6 @@
+/* eslint-disable no-useless-constructor */
 import React from "react";
-import loginImg from "../../login.svg";
+import loginImg from "../../login.png";
 
 export class Login extends React.Component {
   constructor(props) {
@@ -12,7 +13,7 @@ export class Login extends React.Component {
         <div className="header">Login</div>
         <div className="content">
           <div className="image">
-            <img src={loginImg} />
+            <img src={loginImg} /> 
           </div>
           <div className="form">
             <div className="form-group">
