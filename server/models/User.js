@@ -22,6 +22,14 @@ const UserSchema = new Schema({
     userRatings: [{
         type: SchemaTypes.ObjectId,
         ref: 'UserRating'
+    }],
+    createdClasses: [{
+        type: SchemaTypes.ObjectId,
+        ref: 'Class'
+    }],
+    joinedClasses: [{
+        type: SchemaTypes.ObjectId,
+        ref: 'Class'
     }]
 },
 {
@@ -51,5 +59,15 @@ UserSchema.virtual('averageRating').get(function averageRating() {
     ) / this.userRatings.length;
 });
 
-const User = mongoose.model(UserSchema, 'User');
+UserSchema.methods.addCreatedClass = function addCreatedClass(newClass) {
+    this.createdClasses.push(newClass);
+    this.save();
+}
+
+UserSchema.methods.joinClass = function joinClass(newClass) {
+    this.joinedClasses.push(newClass);
+    this.save();
+}
+
+const User = model(UserSchema, 'User');
 module.exports = User;
