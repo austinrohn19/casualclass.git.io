@@ -52,7 +52,7 @@ const homePage = () => {
 
     return (
         <div>
-            <Grid stackable columns='equal'>
+            <Grid stretched stackable columns='equal'>
                 <Grid.Row>
                     <Grid.Column>
                         <Card fluid>
@@ -67,8 +67,8 @@ const homePage = () => {
                             </Card.Content>
                         </Card>
                     </Grid.Column>
-                    <Grid.Column floated='right'>
-                        <Card fluid>
+                    <Grid.Column fluid floated='right'>
+                        <Card>
                             <Card.Content>
                                 <SearchForm />
                             </Card.Content>
