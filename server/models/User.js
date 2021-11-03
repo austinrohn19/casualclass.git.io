@@ -40,17 +40,17 @@ UserSchema.pre('save', async function (next) {
     if (this.isNew || this.isModified('password')) {
         const saltRounds = 10;
         this.password = await bcrypt.hash(this.password, saltRounds);
-      }
-    
-      next();
+    }
+
+    next();
 });
 
 UserSchema.methods.checkPassword = async function (password) {
     return await bcrypt.compare(password, this.password);
 }
 
-UserSchema.methods.addUserRating = function addUserRating(userRating) {
-    this.userRatings.push(userRating);
+UserSchema.methods.addUserRating = async function addUserRating(userRating) {
+    this.userRatings.push(userRating._id);
     this.save();
 }
 

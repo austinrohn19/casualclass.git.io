@@ -28,16 +28,17 @@ const typeDefs = gql`
         category: Category
         timesPurchased: Int
         reviews: [Review]
-        createdOn: Int
+        createdOn: String
         popularity: Float
     }
 
     type Review {
+        _id: ID
         class: Class
         author: User
         rating: Int
         text: String
-        createdOn: Int
+        createdOn: String
     }
 
     type Category {
@@ -63,6 +64,7 @@ const typeDefs = gql`
 
         createCategory(name: String!): Category
         createClass(title: String!, author: ID!, description: String!, previewVideoUrl: String!, cost: Float!, category: ID!): Class
+        createReview(class: ID!, author: ID!, rating: Int!, text: String!): Review
     }
 `;
 

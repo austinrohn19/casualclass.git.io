@@ -53,9 +53,9 @@ const resolvers = {
         rateUser: async (parent, { userId, ratedUserId, value }) => {
             const userRating = await UserRating.create({ userId, ratedUserId, value });
 
-            const ratedUser = await User.findOne({ ratedUserId });
+            const ratedUser = await User.findOne({ _id: ratedUserId });
 
-            ratedUser.addUserRating(userRating);
+            await ratedUser.addUserRating(userRating);
 
             return ratedUser;
         },
@@ -74,10 +74,13 @@ const resolvers = {
 
             author.addCreatedClass(newClass);
             return newClass;
-        }
+        },
         
         // Review mutations
-        
+        createReview: async (parent, args) => {
+            const newReview = await Review.create({...args});
+            return newReview;
+        }
     }
 };
 
