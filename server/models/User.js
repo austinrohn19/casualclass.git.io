@@ -16,8 +16,6 @@ const UserSchema = new Schema({
     password: {
         type: String,
         required: true,
-        minLength: 8,
-        maxLength: 20
     },
     userRatings: [{
         type: SchemaTypes.ObjectId,
@@ -38,13 +36,16 @@ const UserSchema = new Schema({
     }
 });
 
-UserSchema.pre('init', async function savePassword(next) {
-    this.password = await bcrypt.hash(this.password, 10);
-    this.save();
-    next();
+UserSchema.pre('save', async function (next) {
+    if (this.isNew || this.isModified('password')) {
+        const saltRounds = 10;
+        this.password = await bcrypt.hash(this.password, saltRounds);
+      }
+    
+      next();
 });
 
-UserSchema.methods.checkPassword = async function checkPassword(password) {
+UserSchema.methods.checkPassword = async function (password) {
     return await bcrypt.compare(password, this.password);
 }
 
