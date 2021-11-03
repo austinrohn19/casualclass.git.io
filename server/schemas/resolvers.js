@@ -60,7 +60,21 @@ const resolvers = {
             return ratedUser;
         },
 
+        // Category mutations
+        createCategory: async (parent, { name }) => {
+            const category = await Category.create({ name });
+            return category;
+        },
+
         // Class mutations
+        createClass: async (parent, args) => {
+            const newClass = await Class.create({...args});
+            const userId = args.author;
+            const author = await User.findOne({_id: userId});
+
+            author.addCreatedClass(newClass);
+            return newClass;
+        }
         
         // Review mutations
         
