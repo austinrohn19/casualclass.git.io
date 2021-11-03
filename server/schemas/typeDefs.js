@@ -19,6 +19,7 @@ const typeDefs = gql`
     }
 
     type Class {
+        _id: ID
         title: String
         author: User
         description: String
@@ -49,6 +50,7 @@ const typeDefs = gql`
     }
 
     type Query {
+        user: User
         class: Class
     }
 
@@ -58,6 +60,9 @@ const typeDefs = gql`
 
         joinClass(userId: ID!, classId: ID!): Class
         rateUser(userId: ID!, ratedUserId: ID!, value: Int!): User
+
+        createCategory(name: String!): Category
+        createClass(title: String!, author: ID!, description: String!, previewVideoUrl: String!, cost: Float!, category: ID!): Class
     }
 `;
 
