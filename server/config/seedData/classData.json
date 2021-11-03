@@ -1,0 +1,12 @@
+[
+    {
+        "title": "Cooking in the Wilderness",
+        "description": "A class on how to cook in the frontier",
+        "cost": 19.99
+    },
+    {
+        "title": "How to Make Perfect Cocktails",
+        "description": "Impress your friends with amazing cocktails",
+        "cost": 9.99
+    }
+]

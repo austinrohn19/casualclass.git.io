@@ -10,9 +10,23 @@ const { signToken } = require('../utils/auth');
 
 
 const resolvers = {
-    // Query: {
+    Query: {
+        classes: async (parent, { sortBy }) => {
+            return await Class.find({})
+                .populate(['author', 'category', 'reviews'])
+                .sort(sortBy ? sortBy : 'createdOn');
+        },
 
-    // },
+        class: async (parent, { id }) => {
+            return await Class.findById(id)
+                .populate(['author', 'category', 'reviews']);
+        },
+
+        user: async (parent, { id }) => {
+            return await User.findById(id)
+                .populate(['userRatings', 'createdClasses', 'joinedClasses']);
+        }
+    },
 
     Mutation: {
         // User model mutations
