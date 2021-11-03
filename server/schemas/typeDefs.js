@@ -19,6 +19,7 @@ const typeDefs = gql`
     }
 
     type Class {
+        _id: ID
         title: String
         author: User
         description: String
@@ -27,19 +28,21 @@ const typeDefs = gql`
         category: Category
         timesPurchased: Int
         reviews: [Review]
-        createdOn: Int
+        createdOn: Date
         popularity: Float
     }
 
     type Review {
+        _id: ID
         class: Class
         author: User
         rating: Int
         text: String
-        createdOn: Int
+        createdOn: Date
     }
 
     type Category {
+        _id: ID
         name: String
     }
 
@@ -49,8 +52,10 @@ const typeDefs = gql`
     }
 
     type Query {
-        class: Class
+        classes(sortBy: String): [Class]
     }
+
+    scalar Date
 
     type Mutation {
         createUser(username: String!, email: String!, password: String!): Auth
