@@ -18,11 +18,12 @@ async function seedData() {
         const categories = await Category.create(categoryData);
 
         for (let i in users) {
-            await Class.create({
+            const newClass = await Class.create({
                 ...classData[i],
                 author: users[i]._id,
                 category: categories[i]._id
             });
+            await users[i].addCreatedClass(newClass);
         }
 
         console.log("Seeded successfully");

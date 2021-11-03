@@ -54,6 +54,7 @@ const typeDefs = gql`
     type Query {
         classes(sortBy: String): [Class]
         class(id: ID!): Class
+        user(id: ID!): User
     }
 
     scalar Date

@@ -61,14 +61,14 @@ UserSchema.virtual('averageRating').get(function averageRating() {
     return !Number.isNaN(val) ? val : 1;
 });
 
-UserSchema.methods.addCreatedClass = function addCreatedClass(newClass) {
-    this.createdClasses.push(newClass);
-    this.save();
+UserSchema.methods.addCreatedClass = async function addCreatedClass(newClass) {
+    this.createdClasses.push(newClass._id);
+    await this.save();
 }
 
-UserSchema.methods.joinClass = function joinClass(newClass) {
-    this.joinedClasses.push(newClass);
-    this.save();
+UserSchema.methods.joinClass = async function joinClass(newClass) {
+    this.joinedClasses.push(newClass._id);
+    await this.save();
 }
 
 const User = model('User', UserSchema);

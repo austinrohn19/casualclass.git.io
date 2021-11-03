@@ -20,6 +20,11 @@ const resolvers = {
         class: async (parent, { id }) => {
             return await Class.findById(id)
                 .populate(['author', 'category', 'reviews']);
+        },
+
+        user: async (parent, { id }) => {
+            return await User.findById(id)
+                .populate(['userRatings', 'createdClasses', 'joinedClasses']);
         }
     },
 
