@@ -15,6 +15,11 @@ const resolvers = {
             return await Class.find({})
                 .populate(['author', 'category', 'reviews'])
                 .sort(sortBy ? sortBy : 'createdOn');
+        },
+
+        class: async (parent, { id }) => {
+            return await Class.findById(id)
+                .populate(['author', 'category', 'reviews']);
         }
     },
 
