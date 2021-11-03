@@ -58,7 +58,7 @@ UserSchema.virtual('averageRating').get(function averageRating() {
         (total, rating) => total + rating.value,
         0
     ) / this.userRatings.length;
-    return !Number.isNaN(val) ? val : 1;
+    return !Number.isNaN(val) ? val : 0;
 });
 
 UserSchema.methods.addCreatedClass = async function addCreatedClass(newClass) {
