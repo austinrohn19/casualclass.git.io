@@ -1,5 +1,4 @@
 import React from "react";
-import loginImg from "../../login.png";
 
 export class Register extends React.Component {
   constructor(props) {
@@ -12,7 +11,7 @@ export class Register extends React.Component {
         <div className="header">Register</div>
         <div className="content">
           <div className="image">
-            <img src={loginImg} />
+          <img src="../login.png" alt="" />
           </div>
           <div className="form">
             <div className="form-group">
