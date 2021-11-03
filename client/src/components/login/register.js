@@ -1,39 +1,68 @@
-import React from "react";
+import React, { useState } from "react";
+import "./style.scss";
 
-export class Register extends React.Component {
-  constructor(props) {
-    super(props);
+import { useMutation } from '@apollo/client'
+import { CREATE_USER } from '../../utils/mutations'
+
+const Register = (props) => {
+
+  const [userFormData, setUserFormData] = useState({ username: '', email: '', password: '' })
+
+  const [createUser, { error, data }] = useMutation(CREATE_USER)
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setUserFormData({ ...userFormData, [name]: value });
+  };
+
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      const { data } = await createUser({
+        variables: { userFormData }
+      })
+
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+
+    setUserFormData({
+      username: '',
+      email: '',
+      password: ''
+    })
   }
 
-  render() {
-    return (
-      <div className="base-container" ref={this.props.containerRef}>
-        <div className="header">Register</div>
-        <div className="content">
-          <div className="image">
+  return (
+    <div className="base-container" ref={props.containerRef}>
+      <div className="header">Register</div>
+      <div className="content">
+        <div className="image">
           <img src="../login.png" alt="" />
-          </div>
-          <div className="form">
-            <div className="form-group">
-              <label htmlFor="username">Username</label>
-              <input type="text" name="username" placeholder="username" />
-            </div>
-            <div className="form-group">
-              <label htmlFor="email">Email</label>
-              <input type="text" name="email" placeholder="email" />
-            </div>
-            <div className="form-group">
-              <label htmlFor="password">Password</label>
-              <input type="text" name="password" placeholder="password" />
-            </div>
-          </div>
         </div>
-        <div className="footer">
-          <button type="button" className="btn">
+        <form className="form" onSubmit={handleFormSubmit}>
+          <div className="form-group">
+            <label htmlFor="username">Username</label>
+            <input type="text" name="username" placeholder="username" onChange={handleInputChange} />
+          </div>
+          <div className="form-group">
+            <label htmlFor="email">Email</label>
+            <input type="text" name="email" placeholder="email" onChange={handleInputChange} />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <input type="password" name="password" placeholder="password" onChange={handleInputChange} />
+          </div>
+          <button type="submit" className="btn">
             Register
           </button>
-        </div>
+        </form>
       </div>
-    );
-  }
+    </div>
+  );
+
 }
+
+export default Register;
