@@ -47,7 +47,7 @@ ClassSchema.virtual('popularity').get(function popularity() {
         (total, review) => total + review.rating,
         0
     ) / this.reviews.length;
-    return !Number.isNaN(val) ? val : 1;
+    return !Number.isNaN(val) ? val : 0;
 })
 
 ClassSchema.methods.purchase = function purchase() {
