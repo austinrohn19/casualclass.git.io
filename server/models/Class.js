@@ -18,7 +18,9 @@ const ClassSchema = new Schema({
     },
     cost: {
         type: Number,
-        required: true
+        required: true,
+        default: 0,
+        min: 0
     },
     category: {
         type: SchemaTypes.ObjectId,
