@@ -1,5 +1,5 @@
 import React from 'react';
-import {Divider,} from "semantic-ui-react";
+import {Button, Divider, Icon} from "semantic-ui-react";
 import './VideoMetadata.scss';
 import {Rating} from '../Rating/Rating';
 
@@ -17,6 +17,9 @@ export function VideoMetadata(props) {
         <div className='video-actions' >
           <Rating likeCount={props.video.statistics.likeCount}
                   dislikeCount={props.video.statistics.dislikeCount}/>
+          <Button basic icon>
+            <Icon name='ellipsis horizontal' />
+          </Button>
         </div>
       </div>
       <Divider/>

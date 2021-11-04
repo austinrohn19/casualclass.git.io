@@ -16,8 +16,6 @@ const UserSchema = new Schema({
     password: {
         type: String,
         required: true,
-        minLength: 8,
-        maxLength: 20
     },
     userRatings: [{
         type: SchemaTypes.ObjectId,
@@ -38,35 +36,40 @@ const UserSchema = new Schema({
     }
 });
 
-UserSchema.pre('init', async function savePassword(next) {
-    this.password = await bcrypt.hash(this.password, 10);
-    this.save();
-    next();
+UserSchema.pre('save', async function (next) {
+    if (this.isNew || this.isModified('password')) {
+        const saltRounds = 10;
+        this.password = await bcrypt.hash(this.password, saltRounds);
+      }
+    
+      next();
 });
 
-UserSchema.methods.checkPassword = async function checkPassword(password) {
+UserSchema.methods.checkPassword = async function (password) {
     return await bcrypt.compare(password, this.password);
 }
 
-UserSchema.methods.addUserRating = function addUserRating(userRating) {
+UserSchema.methods.addUserRating = async function addUserRating(userRating) {
     this.userRatings.push(userRating);
-    this.save();
+    await this.save();
 }
 
 UserSchema.virtual('averageRating').get(function averageRating() {
-    return this.userRatings.reduce(
-        (total, rating) => total + rating.value
+    const val = this.userRatings.reduce(
+        (total, rating) => total + rating.value,
+        0
     ) / this.userRatings.length;
+    return !Number.isNaN(val) ? val : 0;
 });
 
-UserSchema.methods.addCreatedClass = function addCreatedClass(newClass) {
-    this.createdClasses.push(newClass);
-    this.save();
+UserSchema.methods.addCreatedClass = async function addCreatedClass(newClass) {
+    this.createdClasses.push(newClass._id);
+    await this.save();
 }
 
-UserSchema.methods.joinClass = function joinClass(newClass) {
-    this.joinedClasses.push(newClass);
-    this.save();
+UserSchema.methods.joinClass = async function joinClass(newClass) {
+    this.joinedClasses.push(newClass._id);
+    await this.save();
 }
 
 const User = model('User', UserSchema);

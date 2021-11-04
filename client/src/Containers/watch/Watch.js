@@ -50,3 +50,19 @@ export class Watch extends React.Component {
     }
   };
 }
+
+function mapStateToProps(state, props) {
+  return {
+    youtubeLibraryLoaded: getYoutubeLibraryLoaded(state),
+    channelId: getChannelId(state, props.location, 'v'),
+    nextPageToken: getCommentNextPageToken(state, props.location),
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  const fetchWatchDetails = watchActions.details.request;
+  const fetchCommentThread = commentActions.thread.request;
+  return bindActionCreators({fetchWatchDetails, fetchCommentThread}, dispatch);
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Watch));

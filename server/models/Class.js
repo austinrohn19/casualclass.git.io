@@ -14,12 +14,13 @@ const ClassSchema = new Schema({
         required: true
     },
     previewVideoUrl: {
-        type: String,
-        required: true
+        type: String
     },
     cost: {
         type: Number,
-        required: true
+        required: true,
+        default: 0,
+        min: 0
     },
     category: {
         type: SchemaTypes.ObjectId,
@@ -27,6 +28,7 @@ const ClassSchema = new Schema({
     },
     timesPurchased: {
         type: Number,
+        default: 0
     },
     reviews: [{
         type: SchemaTypes.ObjectId,
@@ -44,14 +46,21 @@ const ClassSchema = new Schema({
 });
 
 ClassSchema.virtual('popularity').get(function popularity() {
-    return this.reviews.reduce(
-        (total, review) => total + review.rating
+    const val = this.reviews.reduce(
+        (total, review) => total + review.rating,
+        0
     ) / this.reviews.length;
+    return !Number.isNaN(val) ? val : 0;
 })
 
-ClassSchema.methods.purchase = function purchase() {
+ClassSchema.methods.purchase = async function purchase() {
     this.timesPurchased++;
-    this.save();
+    await this.save();
+}
+
+ClassSchema.methods.addReview = async function addReview(review) {
+    this.reviews.push(review);
+    await this.save();
 }
 
 const Class = model('Class', ClassSchema);
