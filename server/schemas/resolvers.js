@@ -3,8 +3,7 @@ const {
     User,
     UserRating,
     Class,
-    Category,
-    Review
+    Category
 } = require('../models');
 const { signToken } = require('../utils/auth');
 
@@ -13,18 +12,93 @@ const resolvers = {
     Query: {
         classes: async (parent, { sortBy }) => {
             return await Class.find({})
-                .populate(['author', 'category', 'reviews'])
+                .populate([
+                    {
+                        path: 'author',
+                        populate: {
+                            path: 'userRatings',
+                            populate: 'user'
+                        }
+                    },
+                    {
+                        path: 'category'
+                    },
+                    {
+                        path:'reviews',
+                        populate: {
+                            path: 'author'
+                        }
+                    }           
+                ])
                 .sort(sortBy ? sortBy : 'createdOn');
         },
 
         class: async (parent, { id }) => {
             return await Class.findById(id)
-                .populate(['author', 'category', 'reviews']);
+                .populate([
+                    {
+                        path: 'author',
+                        populate: {
+                            path: 'userRatings',
+                            populate: 'user'
+                        }
+                    },
+                    {
+                        path: 'category'
+                    },
+                    {
+                        path:'reviews',
+                        populate: {
+                            path: 'author'
+                        }
+                    }           
+                ]);
         },
 
         user: async (parent, { id }) => {
             return await User.findById(id)
-                .populate(['userRatings', 'createdClasses', 'joinedClasses']);
+                .populate([
+                    {
+                        path:'userRatings',
+                        populate: {
+                            path: 'user'
+                        }
+                    },
+                    {
+                        path: 'createdClasses',
+                        populate : [
+                            {
+                                path: 'author',
+                            },
+                            {
+                                path: 'category'
+                            },
+                            {
+                                path:'reviews',
+                                populate: {
+                                    path: 'author'
+                                }
+                            }           
+                        ]
+                    },
+                    {
+                        path: 'joinedClasses',
+                        populate: [
+                            {
+                                path: 'author',
+                            },
+                            {
+                                path: 'category'
+                            },
+                            {
+                                path:'reviews',
+                                populate: {
+                                    path: 'author'
+                                }
+                            }           
+                        ]
+                    }
+                ]);
         }
     },
 
@@ -58,7 +132,7 @@ const resolvers = {
             const joinedClass = await Class.findOne({ classId });
             const user = await User.findOne({ userId });
 
-            user.joinClass(joinedClass);
+            await user.joinClass(joinedClass);
 
             return joinedClass;
         },
@@ -69,7 +143,7 @@ const resolvers = {
 
             const ratedUser = await User.findOne({ ratedUserId });
 
-            ratedUser.addUserRating(userRating);
+            await ratedUser.addUserRating(userRating);
 
             return ratedUser;
         },
@@ -86,7 +160,7 @@ const resolvers = {
             const userId = args.author;
             const author = await User.findOne({_id: userId});
 
-            author.addCreatedClass(newClass);
+            await author.addCreatedClass(newClass);
             return newClass;
         }
         

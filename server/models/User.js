@@ -49,9 +49,9 @@ UserSchema.methods.checkPassword = async function (password) {
     return await bcrypt.compare(password, this.password);
 }
 
-UserSchema.methods.addUserRating = function addUserRating(userRating) {
+UserSchema.methods.addUserRating = async function addUserRating(userRating) {
     this.userRatings.push(userRating);
-    this.save();
+    await this.save();
 }
 
 UserSchema.virtual('averageRating').get(function averageRating() {
