@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { Menu } from 'semantic-ui-react'
+import { Menu,Image} from 'semantic-ui-react'
+import logo from '../assets/login.png';
+import {Link,} from 'react-router-dom';
 
 
 const Header = () => {
@@ -19,6 +21,7 @@ const Header = () => {
                 onClick={handleItemClick}
                 href='/account'
             />
+
             <Menu.Menu position='right'>
                 <Menu.Item
                     name='Sign In'
