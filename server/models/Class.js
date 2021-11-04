@@ -58,5 +58,10 @@ ClassSchema.methods.purchase = async function purchase() {
     await this.save();
 }
 
+ClassSchema.methods.addReview = async function addReview(review) {
+    this.reviews.push(review);
+    await this.save();
+}
+
 const Class = model('Class', ClassSchema);
 module.exports = Class;
