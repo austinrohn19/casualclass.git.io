@@ -128,9 +128,8 @@ const resolvers = {
             return { token, user };
         },
 
-        joinClass: async (parent, { userId, classId }) => {
+        joinClass: async (parent, { classId }, { user }) => {
             const joinedClass = await Class.findOne({ classId });
-            const user = await User.findOne({ userId });
 
             await user.joinClass(joinedClass);
 
@@ -138,10 +137,14 @@ const resolvers = {
         },
 
         // User rating mutation
-        rateUser: async (parent, { userId, ratedUserId, value }) => {
-            const userRating = await UserRating.create({ userId, ratedUserId, value });
+        rateUser: async (parent, { ratedUserId, value }, { user }) => {
+            const userRating = await UserRating.create({
+                user: user._id,
+                ratedUser: ratedUser._id,
+                value
+            });
 
-            const ratedUser = await User.findOne({ ratedUserId });
+            const ratedUser = await User.findById(ratedUserId);
 
             await ratedUser.addUserRating(userRating);
 
@@ -155,10 +158,12 @@ const resolvers = {
         },
 
         // Class mutations
-        createClass: async (parent, args) => {
-            const newClass = await Class.create({...args});
-            const userId = args.author;
-            const author = await User.findOne({_id: userId});
+        createClass: async (parent, args, { user }) => {
+            const newClass = await Class.create({
+                ...args,
+                author: user._id
+            });
+            const author = await User.findById(user._id);
 
             await author.addCreatedClass(newClass);
             return newClass;
