@@ -3,8 +3,49 @@ import { Card, Grid } from 'semantic-ui-react'
 
 import LessonCard from '../components/lessonCard'
 import SearchForm from '../components/SearchForm'
+import WatchContent from '../Containers/Watch/WatchContent/WatchContent';
 
 
+
+export class Watch extends React.Component {
+    render() {
+      const videoId = this.getVideoId();
+      return (
+        <WatchContent videoId={videoId} channelId={this.props.channelId} bottomReachedCallback={this.fetchMoreComments}
+                      nextPageToken={this.props.nextPageToken}/>
+      );
+    }
+  
+    componentDidMount() {
+      if (this.props.youtubeLibraryLoaded) {
+        this.fetchWatchContent();
+      }
+    }
+  
+    componentDidUpdate(prevProps) {
+      if (this.props.youtubeLibraryLoaded !== prevProps.youtubeLibraryLoaded) {
+        this.fetchWatchContent();
+      }
+    }
+  
+    getVideoId() {
+      return getSearchParam(this.props.location, 'v');
+    }
+  
+    fetchWatchContent() {
+      const videoId = this.getVideoId();
+      if (!videoId) {
+        this.props.history.push('/');
+      }
+      this.props.fetchWatchDetails(videoId, this.props.channelId);
+    }
+  
+    fetchMoreComments = () => {
+      if (this.props.nextPageToken) {
+        this.props.fetchCommentThread(this.getVideoId(), this.props.nextPageToken);
+      }
+    };
+  }
 
 const homePage = () => {
 

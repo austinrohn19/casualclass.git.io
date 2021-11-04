@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Menu,Image} from 'semantic-ui-react'
-import logo from '../assets/login.png';
+import logo from '../../assets/login.png';
 import {Link,} from 'react-router-dom';
 
 

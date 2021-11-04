@@ -21,7 +21,6 @@ class WatchContent extends React.Component {
           <Video className='video' id={this.props.videoId}/>
           <VideoMetadata className='metadata' video={this.props.video}/>
           <VideoInfoBox className='video-info-box' video={this.props.video} channel={this.props.channel}/>
-        
           <Comments className='comments' comments={this.props.comments}  amountComments={this.props.amountComments}/>
         </div>
       </InfiniteScroll>
