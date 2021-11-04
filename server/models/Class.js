@@ -14,8 +14,7 @@ const ClassSchema = new Schema({
         required: true
     },
     previewVideoUrl: {
-        type: String,
-        required: true
+        type: String
     },
     cost: {
         type: Number,
@@ -44,9 +43,11 @@ const ClassSchema = new Schema({
 });
 
 ClassSchema.virtual('popularity').get(function popularity() {
-    return this.reviews.reduce(
-        (total, review) => total + review.rating
+    const val = this.reviews.reduce(
+        (total, review) => total + review.rating,
+        0
     ) / this.reviews.length;
+    return !Number.isNaN(val) ? val : 0;
 })
 
 ClassSchema.methods.purchase = function purchase() {

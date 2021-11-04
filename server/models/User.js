@@ -55,23 +55,21 @@ UserSchema.methods.addUserRating = async function addUserRating(userRating) {
 }
 
 UserSchema.virtual('averageRating').get(function averageRating() {
-    if (this.userRatings.length) {
-        return this.userRatings.reduce(
-            (total, rating) => total + rating.value
-        ) / this.userRatings.length;
-    } else {
-        return 0;
-    }
+    const val = this.userRatings.reduce(
+        (total, rating) => total + rating.value,
+        0
+    ) / this.userRatings.length;
+    return !Number.isNaN(val) ? val : 0;
 });
 
-UserSchema.methods.addCreatedClass = function addCreatedClass(newClass) {
-    this.createdClasses.push(newClass);
-    this.save();
+UserSchema.methods.addCreatedClass = async function addCreatedClass(newClass) {
+    this.createdClasses.push(newClass._id);
+    await this.save();
 }
 
-UserSchema.methods.joinClass = function joinClass(newClass) {
-    this.joinedClasses.push(newClass);
-    this.save();
+UserSchema.methods.joinClass = async function joinClass(newClass) {
+    this.joinedClasses.push(newClass._id);
+    await this.save();
 }
 
 const User = model('User', UserSchema);
