@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Menu, Image } from 'semantic-ui-react'
 import logo from '../assets/login.png';
 import { Link, } from 'react-router-dom';
+import Auth from '../utils/auth'
 
 
 const Header = () => {
@@ -36,6 +37,10 @@ const Header = () => {
                     active={active === 'Sign Up'}
                     onClick={handleItemClick}
                     href='/register'
+                />
+                <Menu.Item
+                    name="Log Out"
+                    onClick={Auth.logout}
                 />
             </Menu.Menu>
         </Menu>
