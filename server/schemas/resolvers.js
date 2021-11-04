@@ -136,6 +136,9 @@ const resolvers = {
         },
 
         joinClass: async (parent, { classId }, { user }) => {
+            if (!user) {
+                throw new AuthenticationError('Unauthorized action');
+            }
             const joinedClass = await Class.findOne({ classId });
 
             await user.joinClass(joinedClass);
@@ -145,6 +148,9 @@ const resolvers = {
 
         // User rating mutation
         rateUser: async (parent, { ratedUserId, value }, { user }) => {
+            if (!user) {
+                throw new AuthenticationError('Unauthorized action');
+            }
             const userRating = await UserRating.create({
                 user: user._id,
                 ratedUser: ratedUser._id,
@@ -166,6 +172,9 @@ const resolvers = {
 
         // Class mutations
         createClass: async (parent, args, { user }) => {
+            if (!user) {
+                throw new AuthenticationError('Unauthorized action');
+            }
             const newClass = await Class.create({
                 ...args,
                 author: user._id

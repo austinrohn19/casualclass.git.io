@@ -68,6 +68,8 @@ const typeDefs = gql`
 
         createCategory(name: String!): Category
         createClass(title: String!, description: String!, previewVideoUrl: String!, cost: Float!, category: ID!): Class
+
+        createReview(classId: ID!, text: String!, rating: Int!)
     }
 `;
 
