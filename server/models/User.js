@@ -50,8 +50,8 @@ UserSchema.methods.checkPassword = async function (password) {
 }
 
 UserSchema.methods.addUserRating = async function addUserRating(userRating) {
-    this.userRatings.push(userRating._id);
-    this.save();
+    this.userRatings.push(userRating);
+    await this.save();
 }
 
 UserSchema.virtual('averageRating').get(function averageRating() {

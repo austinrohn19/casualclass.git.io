@@ -1,12 +1,12 @@
 const { Schema, SchemaTypes, model } = require('mongoose');
 
 const UserRatingSchema = new Schema({
-    userId: {
+    user: {
         type: SchemaTypes.ObjectId,
         ref: 'User',
         required: true
     },
-    ratedUserId: {
+    ratedUser: {
         type: SchemaTypes.ObjectId,
         ref: 'User',
         required: true

@@ -8,5 +8,15 @@
         "username": "Bartender Bob",
         "email": "bartenderbob@gmail.com",
         "password": "moscowmule123"
+    },
+    {
+        "username": "Reviewer Rhonda",
+        "email": "reviewerrhonda@gmail.com",
+        "password": "ireviewthings123"
+    },
+    {
+        "username": "Critic Clark",
+        "email": "criticclaire@gmail.com",
+        "password": "isitgood123"
     }
 ]
