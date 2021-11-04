@@ -15,6 +15,10 @@ const resolvers = {
                 .populate([
                     {
                         path: 'author',
+                        populate: {
+                            path: 'userRatings',
+                            populate: 'user'
+                        }
                     },
                     {
                         path: 'category'
@@ -34,6 +38,10 @@ const resolvers = {
                 .populate([
                     {
                         path: 'author',
+                        populate: {
+                            path: 'userRatings',
+                            populate: 'user'
+                        }
                     },
                     {
                         path: 'category'
@@ -124,7 +132,7 @@ const resolvers = {
             const joinedClass = await Class.findOne({ classId });
             const user = await User.findOne({ userId });
 
-            user.joinClass(joinedClass);
+            await user.joinClass(joinedClass);
 
             return joinedClass;
         },
@@ -135,7 +143,7 @@ const resolvers = {
 
             const ratedUser = await User.findOne({ ratedUserId });
 
-            ratedUser.addUserRating(userRating);
+            await ratedUser.addUserRating(userRating);
 
             return ratedUser;
         },
@@ -152,7 +160,7 @@ const resolvers = {
             const userId = args.author;
             const author = await User.findOne({_id: userId});
 
-            author.addCreatedClass(newClass);
+            await author.addCreatedClass(newClass);
             return newClass;
         }
         
