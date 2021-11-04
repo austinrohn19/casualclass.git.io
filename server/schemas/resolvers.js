@@ -99,6 +99,13 @@ const resolvers = {
                         ]
                     }
                 ]);
+        },
+
+        me: async (parent, args, { user }) => {
+            if (user) {
+                return user;
+            }
+            return null;
         }
     },
 
