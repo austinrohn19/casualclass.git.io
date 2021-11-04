@@ -4,6 +4,8 @@ import { Card, Grid } from 'semantic-ui-react'
 import LessonCard from '../components/lessonCard'
 import SearchForm from '../components/SearchForm'
 
+
+
 const homePage = () => {
 
     const lessons = [
