@@ -4,6 +4,8 @@ import "./style.scss";
 import { useMutation } from '@apollo/client'
 import { CREATE_USER } from '../../utils/mutations'
 
+import Auth from '../../utils/auth'
+
 const Register = (props) => {
 
   const [userFormData, setUserFormData] = useState({ username: '', email: '', password: '' })
@@ -20,20 +22,21 @@ const Register = (props) => {
 
     try {
       const { data } = await createUser({
-        variables: { userFormData }
+        variables: { ...userFormData },
       })
-
       console.log(data);
-    } catch (error) {
-      console.log(error);
+
+      Auth.login(data.createUser.token);
+    } catch (err) {
+      console.error(err);
     }
 
     setUserFormData({
       username: '',
       email: '',
-      password: ''
-    })
-  }
+      password: '',
+    });
+  };
 
   return (
     <div className="base-container" ref={props.containerRef}>

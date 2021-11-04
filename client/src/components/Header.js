@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Menu,Image} from 'semantic-ui-react'
+import { Menu, Image } from 'semantic-ui-react'
 import logo from '../assets/login.png';
-import {Link,} from 'react-router-dom';
+import { Link, } from 'react-router-dom';
 
 
 const Header = () => {
@@ -14,7 +14,9 @@ const Header = () => {
 
     return (
         <Menu>
-            <Menu.Item href='/' header>Casual Class</Menu.Item>
+            <Menu.Item header className='logo'>
+                <Link to='/'><Image src={logo} size='small' /></Link>
+            </Menu.Item>
             <Menu.Item
                 name='Account'
                 active={active === 'Account'}
