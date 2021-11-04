@@ -3,7 +3,8 @@ const {
     User,
     UserRating,
     Class,
-    Category
+    Category,
+    Review
 } = require('../models');
 const { signToken } = require('../utils/auth');
 
@@ -183,10 +184,27 @@ const resolvers = {
 
             await author.addCreatedClass(newClass);
             return newClass;
-        }
+        },
         
         // Review mutations
-        
+        createReview: async (parent, args, { user }) => {
+            if (!user) {
+                throw new AuthenticationError('Unauthorized action');
+            }
+
+            const newReviewId = (await Review.create({
+                ...args,
+                author: user._id,
+                class: args.classId
+            }))._id;
+            const newReview = await Review.findById(newReviewId)
+                .populate(['author']);
+
+            const reviewedClass = await Class.findById(args.classId);
+            await reviewedClass.addReview(newReview);
+
+            return newReview;
+        }
     }
 };
 

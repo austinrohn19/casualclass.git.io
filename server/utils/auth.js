@@ -17,7 +17,7 @@ module.exports = {
 
         // verify token and get user data out of it
         try {
-            const { data } = jwt.verify(token, process.env.JWT_SECRET, { expiresIn });
+            const { data } = jwt.verify(token, process.env.ACCESS_SECRET_TOKEN, { expiresIn });
             req.user = data;
         } catch {
             console.log('Invalid token');

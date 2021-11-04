@@ -55,6 +55,7 @@ const typeDefs = gql`
         classes(sortBy: String): [Class]
         class(id: ID!): Class
         user(id: ID!): User
+        me: User
     }
 
     scalar Date
@@ -69,7 +70,7 @@ const typeDefs = gql`
         createCategory(name: String!): Category
         createClass(title: String!, description: String!, previewVideoUrl: String!, cost: Float!, category: ID!): Class
 
-        createReview(classId: ID!, text: String!, rating: Int!)
+        createReview(classId: ID!, text: String!, rating: Int!): Review
     }
 `;
 
