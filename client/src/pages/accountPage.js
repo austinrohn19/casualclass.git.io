@@ -1,7 +1,7 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
-import { Loader, Header, Label, Button } from 'semantic-ui-react';
+import { Loader, Header, Label, Divider, Button } from 'semantic-ui-react';
 
 import RegisteredClassList from '../components/RegisteredClassList/RegisteredClassList';
 import CreatedClassList from '../components/CreatedClassList/CreatedClassList';
@@ -25,6 +25,7 @@ function AccountPage() {
             <Label>Average Rating: {me.averageRating}</Label>
             <RegisteredClassList joinedClasses={me.joinedClasses} />
             <CreatedClassList createdClasses={me.createdClasses} />
+            <Divider />
             <Button as="a" href="/create-class">
                 Create Class
             </Button>
