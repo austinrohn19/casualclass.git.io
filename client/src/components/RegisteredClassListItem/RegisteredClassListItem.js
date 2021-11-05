@@ -1,5 +1,5 @@
 import React from 'react';
-import { ListItem, ListHeader, Button } from 'semantic-ui-react'
+import { ListItem, Button } from 'semantic-ui-react'
 
 import './RegisteredClassListItem.scss';
 
