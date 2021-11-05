@@ -54,6 +54,7 @@ const typeDefs = gql`
     type Query {
         classes(category: String, sortBy: String): [Class]
         class(id: ID!): Class
+        categories: [Category]
         user(id: ID!): User
         me: User
     }

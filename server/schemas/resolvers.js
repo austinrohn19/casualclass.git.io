@@ -57,6 +57,10 @@ const resolvers = {
                 ]);
         },
 
+        categories: async () => {
+            return await Category.find({});
+        },
+
         user: async (parent, { id }) => {
             return await User.findById(id)
                 .populate([
