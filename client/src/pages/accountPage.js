@@ -4,6 +4,7 @@ import { useQuery } from '@apollo/client';
 import { Loader, Header, Label, Button } from 'semantic-ui-react';
 
 import RegisteredClassList from '../components/RegisteredClassList/RegisteredClassList';
+import CreatedClassList from '../components/CreatedClassList/CreatedClassList';
 
 import { QUERY_ME } from '../utils/queries';
 
@@ -11,6 +12,7 @@ import AuthService from '../utils/auth';
 
 function AccountPage() {
     const { loading, error, data } = useQuery(QUERY_ME);
+    console.log(data)
 
     if (loading) return <Loader />
     if (!AuthService.isLoggedIn()) return <Redirect to="/" />
@@ -19,9 +21,10 @@ function AccountPage() {
     const { me } = data;
     return (
         <div className="account-page">
-            <Header as='h2'>{me.username}</Header>
+            <Header as='h2'>Username: {me.username}</Header>
             <Label>Average Rating: {me.averageRating}</Label>
             <RegisteredClassList joinedClasses={me.joinedClasses} />
+            <CreatedClassList createdClasses={me.createdClasses} />
             <Button as="a" href="/create-class">
                 Create Class
             </Button>

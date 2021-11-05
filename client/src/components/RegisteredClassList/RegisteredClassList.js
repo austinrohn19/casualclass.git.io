@@ -6,7 +6,6 @@ import RegisteredClassListItem from '../RegisteredClassListItem/RegisteredClassL
 import './RegisteredClassList.scss';
 
 function RegisteredClassList({ joinedClasses }) {
-    console.log(joinedClasses);
     return (
         <React.Fragment>
             <Header as="h3">Joined Classes</Header>
