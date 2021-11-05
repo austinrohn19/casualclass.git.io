@@ -3,15 +3,17 @@ const {
     User,
     UserRating,
     Class,
-    Category
+    Category,
+    Review
 } = require('../models');
 const { signToken } = require('../utils/auth');
 
 
 const resolvers = {
     Query: {
-        classes: async (parent, { sortBy }) => {
-            return await Class.find({})
+        classes: async (parent, { category, sortBy }) => {
+            const findParams = category ? { category } : {}
+            return await Class.find(findParams)
                 .populate([
                     {
                         path: 'author',
@@ -53,6 +55,10 @@ const resolvers = {
                         }
                     }           
                 ]);
+        },
+
+        categories: async () => {
+            return await Category.find({});
         },
 
         user: async (parent, { id }) => {
@@ -99,6 +105,56 @@ const resolvers = {
                         ]
                     }
                 ]);
+        },
+
+        me: async (parent, args, { user }) => {
+            if (user) {
+                return await User.findById(user._id)
+                    .populate([
+                        {
+                            path:'userRatings',
+                            populate: {
+                                path: 'user'
+                            }
+                        },
+                        {
+                            path: 'createdClasses',
+                            populate : [
+                                {
+                                    path: 'author',
+                                },
+                                {
+                                    path: 'category'
+                                },
+                                {
+                                    path:'reviews',
+                                    populate: {
+                                        path: 'author'
+                                    }
+                                }           
+                            ]
+                        },
+                        {
+                            path: 'joinedClasses',
+                            populate: [
+                                {
+                                    path: 'author',
+                                },
+                                {
+                                    path: 'category'
+                                },
+                                {
+                                    path:'reviews',
+                                    populate: {
+                                        path: 'author'
+                                    }
+                                }           
+                            ]
+                        }
+                    ]);
+
+            }
+            return null;
         }
     },
 
@@ -128,9 +184,29 @@ const resolvers = {
             return { token, user };
         },
 
-        joinClass: async (parent, { userId, classId }) => {
-            const joinedClass = await Class.findOne({ classId });
-            const user = await User.findOne({ userId });
+        joinClass: async (parent, { classId }, { user }) => {
+            if (!user) {
+                throw new AuthenticationError('Unauthorized action');
+            }
+            const joinedClass = await Class.findOne({ classId })
+                .populate([
+                    {
+                        path: 'author',
+                        populate: {
+                            path: 'userRatings',
+                            populate: 'user'
+                        }
+                    },
+                    {
+                        path: 'category'
+                    },
+                    {
+                        path:'reviews',
+                        populate: {
+                            path: 'author'
+                        }
+                    }           
+                ]);
 
             await user.joinClass(joinedClass);
 
@@ -138,10 +214,59 @@ const resolvers = {
         },
 
         // User rating mutation
-        rateUser: async (parent, { userId, ratedUserId, value }) => {
-            const userRating = await UserRating.create({ userId, ratedUserId, value });
+        rateUser: async (parent, { ratedUserId, value }, { user }) => {
+            if (!user) {
+                throw new AuthenticationError('Unauthorized action');
+            }
+            const userRating = await UserRating.create({
+                user: user._id,
+                ratedUser: ratedUser._id,
+                value
+            });
 
-            const ratedUser = await User.findOne({ ratedUserId });
+            const ratedUser = await User.findById(ratedUserId)
+                .populate([
+                    {
+                        path:'userRatings',
+                        populate: {
+                            path: 'user'
+                        }
+                    },
+                    {
+                        path: 'createdClasses',
+                        populate : [
+                            {
+                                path: 'author',
+                            },
+                            {
+                                path: 'category'
+                            },
+                            {
+                                path:'reviews',
+                                populate: {
+                                    path: 'author'
+                                }
+                            }           
+                        ]
+                    },
+                    {
+                        path: 'joinedClasses',
+                        populate: [
+                            {
+                                path: 'author',
+                            },
+                            {
+                                path: 'category'
+                            },
+                            {
+                                path:'reviews',
+                                populate: {
+                                    path: 'author'
+                                }
+                            }           
+                        ]
+                    }
+                ]);
 
             await ratedUser.addUserRating(userRating);
 
@@ -155,17 +280,106 @@ const resolvers = {
         },
 
         // Class mutations
-        createClass: async (parent, args) => {
-            const newClass = await Class.create({...args});
-            const userId = args.author;
-            const author = await User.findOne({_id: userId});
+        createClass: async (parent, args, { user }) => {
+            if (!user) {
+                throw new AuthenticationError('Unauthorized action');
+            }
+            const newClass = await Class.create({
+                ...args,
+                author: user._id
+            });
+            const author = await User.findById(user._id);
 
             await author.addCreatedClass(newClass);
             return newClass;
-        }
+        },
         
         // Review mutations
-        
+        createReview: async (parent, args, { user }) => {
+            if (!user) {
+                throw new AuthenticationError('Unauthorized action');
+            }
+
+            const newReviewId = (await Review.create({
+                ...args,
+                author: user._id,
+                class: args.classId
+            }))._id;
+            const newReview = await Review.findById(newReviewId)
+                .populate([
+                    {
+                        path: 'author',
+                        populate: [
+                            {
+                                path:'userRatings',
+                                populate: {
+                                    path: 'user'
+                                }
+                            },
+                            {
+                                path: 'createdClasses',
+                                populate : [
+                                    {
+                                        path: 'author',
+                                    },
+                                    {
+                                        path: 'category'
+                                    },
+                                    {
+                                        path:'reviews',
+                                        populate: {
+                                            path: 'author'
+                                        }
+                                    }           
+                                ]
+                            },
+                            {
+                                path: 'joinedClasses',
+                                populate: [
+                                    {
+                                        path: 'author',
+                                    },
+                                    {
+                                        path: 'category'
+                                    },
+                                    {
+                                        path:'reviews',
+                                        populate: {
+                                            path: 'author'
+                                        }
+                                    }           
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        path: 'class',
+                        populate: [
+                            {
+                                path: 'author',
+                                populate: {
+                                    path: 'userRatings',
+                                    populate: 'user'
+                                }
+                            },
+                            {
+                                path: 'category'
+                            },
+                            {
+                                path:'reviews',
+                                populate: {
+                                    path: 'author'
+                                }
+                            }           
+                        ]
+                    }
+                ]);
+
+            const reviewedClass = await Class.findById(args.classId);
+            await reviewedClass.addReview(newReview);
+
+            return newReview;
+        }
     }
 };
 

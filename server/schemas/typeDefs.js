@@ -52,9 +52,11 @@ const typeDefs = gql`
     }
 
     type Query {
-        classes(sortBy: String): [Class]
+        classes(category: String, sortBy: String): [Class]
         class(id: ID!): Class
+        categories: [Category]
         user(id: ID!): User
+        me: User
     }
 
     scalar Date
@@ -63,11 +65,13 @@ const typeDefs = gql`
         createUser(username: String!, email: String!, password: String!): Auth
         login(email: String!, password: String!): Auth
 
-        joinClass(userId: ID!, classId: ID!): Class
-        rateUser(userId: ID!, ratedUserId: ID!, value: Int!): User
+        joinClass(classId: ID!): Class
+        rateUser(ratedUserId: ID!, value: Int!): User
 
         createCategory(name: String!): Category
-        createClass(title: String!, author: ID!, description: String!, previewVideoUrl: String!, cost: Float!, category: ID!): Class
+        createClass(title: String!, description: String!, previewVideoUrl: String!, cost: Float!, category: ID!): Class
+
+        createReview(classId: ID!, text: String!, rating: Int!): Review
     }
 `;
 
