@@ -12,6 +12,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 //Import Components and Pages
 import Header from './components/Header'
 import homePage from './pages/homePage';
+import AccountPage from './pages/accountPage';
 import Footer from './components/Footer';
 import Login from './components/login/login'
 import Register from './components/login/register'
@@ -52,6 +53,7 @@ function App() {
             <Route exact path='/' component={homePage} />
             <Route exact path='/login' component={Login} />
             <Route exact path='/register' component={Register} />
+            <Route  exact path='/account' component={AccountPage} />
           </Switch>
           <Footer />
         </>
