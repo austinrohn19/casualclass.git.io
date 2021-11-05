@@ -11,8 +11,9 @@ const { signToken } = require('../utils/auth');
 
 const resolvers = {
     Query: {
-        classes: async (parent, { sortBy }) => {
-            return await Class.find({})
+        classes: async (parent, { category, sortBy }) => {
+            const findParams = category ? { category } : {}
+            return await Class.find(findParams)
                 .populate([
                     {
                         path: 'author',
@@ -104,7 +105,50 @@ const resolvers = {
 
         me: async (parent, args, { user }) => {
             if (user) {
-                return user;
+                return await User.findById(user._id)
+                    .populate([
+                        {
+                            path:'userRatings',
+                            populate: {
+                                path: 'user'
+                            }
+                        },
+                        {
+                            path: 'createdClasses',
+                            populate : [
+                                {
+                                    path: 'author',
+                                },
+                                {
+                                    path: 'category'
+                                },
+                                {
+                                    path:'reviews',
+                                    populate: {
+                                        path: 'author'
+                                    }
+                                }           
+                            ]
+                        },
+                        {
+                            path: 'joinedClasses',
+                            populate: [
+                                {
+                                    path: 'author',
+                                },
+                                {
+                                    path: 'category'
+                                },
+                                {
+                                    path:'reviews',
+                                    populate: {
+                                        path: 'author'
+                                    }
+                                }           
+                            ]
+                        }
+                    ]);
+
             }
             return null;
         }
@@ -140,7 +184,25 @@ const resolvers = {
             if (!user) {
                 throw new AuthenticationError('Unauthorized action');
             }
-            const joinedClass = await Class.findOne({ classId });
+            const joinedClass = await Class.findOne({ classId })
+                .populate([
+                    {
+                        path: 'author',
+                        populate: {
+                            path: 'userRatings',
+                            populate: 'user'
+                        }
+                    },
+                    {
+                        path: 'category'
+                    },
+                    {
+                        path:'reviews',
+                        populate: {
+                            path: 'author'
+                        }
+                    }           
+                ]);
 
             await user.joinClass(joinedClass);
 
@@ -158,7 +220,49 @@ const resolvers = {
                 value
             });
 
-            const ratedUser = await User.findById(ratedUserId);
+            const ratedUser = await User.findById(ratedUserId)
+                .populate([
+                    {
+                        path:'userRatings',
+                        populate: {
+                            path: 'user'
+                        }
+                    },
+                    {
+                        path: 'createdClasses',
+                        populate : [
+                            {
+                                path: 'author',
+                            },
+                            {
+                                path: 'category'
+                            },
+                            {
+                                path:'reviews',
+                                populate: {
+                                    path: 'author'
+                                }
+                            }           
+                        ]
+                    },
+                    {
+                        path: 'joinedClasses',
+                        populate: [
+                            {
+                                path: 'author',
+                            },
+                            {
+                                path: 'category'
+                            },
+                            {
+                                path:'reviews',
+                                populate: {
+                                    path: 'author'
+                                }
+                            }           
+                        ]
+                    }
+                ]);
 
             await ratedUser.addUserRating(userRating);
 
@@ -198,7 +302,74 @@ const resolvers = {
                 class: args.classId
             }))._id;
             const newReview = await Review.findById(newReviewId)
-                .populate(['author']);
+                .populate([
+                    {
+                        path: 'author',
+                        populate: [
+                            {
+                                path:'userRatings',
+                                populate: {
+                                    path: 'user'
+                                }
+                            },
+                            {
+                                path: 'createdClasses',
+                                populate : [
+                                    {
+                                        path: 'author',
+                                    },
+                                    {
+                                        path: 'category'
+                                    },
+                                    {
+                                        path:'reviews',
+                                        populate: {
+                                            path: 'author'
+                                        }
+                                    }           
+                                ]
+                            },
+                            {
+                                path: 'joinedClasses',
+                                populate: [
+                                    {
+                                        path: 'author',
+                                    },
+                                    {
+                                        path: 'category'
+                                    },
+                                    {
+                                        path:'reviews',
+                                        populate: {
+                                            path: 'author'
+                                        }
+                                    }           
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        path: 'class',
+                        populate: [
+                            {
+                                path: 'author',
+                                populate: {
+                                    path: 'userRatings',
+                                    populate: 'user'
+                                }
+                            },
+                            {
+                                path: 'category'
+                            },
+                            {
+                                path:'reviews',
+                                populate: {
+                                    path: 'author'
+                                }
+                            }           
+                        ]
+                    }
+                ]);
 
             const reviewedClass = await Class.findById(args.classId);
             await reviewedClass.addReview(newReview);
