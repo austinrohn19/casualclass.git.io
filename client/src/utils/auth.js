@@ -30,10 +30,6 @@ class AuthService {
         localStorage.removeItem('id_token');
         window.location.assign('/');
     }
-
-    isLoggedIn() {
-        return localStorage.getItem('id_token') ? true : false;
-    }
 }
 
 export default new AuthService();

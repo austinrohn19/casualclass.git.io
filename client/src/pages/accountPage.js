@@ -15,7 +15,7 @@ function AccountPage() {
     console.log(data)
 
     if (loading) return <Loader />
-    if (!AuthService.isLoggedIn()) return <Redirect to="/" />
+    if (!AuthService.loggedIn()) return <Redirect to="/" />
     if (error) return error.message;
 
     const { me } = data;

@@ -14,6 +14,8 @@ import Header from './components/Header'
 import homePage from './pages/homePage';
 import AccountPage from './pages/accountPage';
 import Footer from './components/Footer';
+import Login from './components/Login'
+import Register from './components/Register';
 import AddClass from './components/AddClass/addClass'
 
 
