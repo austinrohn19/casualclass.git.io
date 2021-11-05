@@ -1,9 +1,11 @@
 import React, {useState} from 'react'
 import { Button, Dropdown, Message, Form } from 'semantic-ui-react'
+import { useMutation } from '@apollo/client'
+import { CREATE_CLASS } from '../../utils/mutations'
 
 const categories = [] //Retrieve categories from backend here.
 
-const AddClass = () => {
+const AddClassForm = () => {
     const [formInput, setFormInput] = useState({
         title: "",
         description: "",
@@ -11,6 +13,8 @@ const AddClass = () => {
         cost: "",
         category: "",
     });
+
+    const [addClass, { error }] = useMutation(CREATE_CLASS)
 
     const handleInputChange = (event) => {
         setFormInput({...formInput, [event.target.name]: event.target.value})
@@ -34,16 +38,25 @@ const AddClass = () => {
         }
     }
 
-    const handleFormSubmit = (event) => {
+    const handleFormSubmit = async (event) => {
         event.preventDefault();
+
         if (formIsValid(formInput)) {
             //add class mutation
-            setFormInput({
-                from_name: "",
-                from_email: "",
-                subject: "",
-                message: ""
-            })
+            try {
+                const data = await addClass({
+                    variables: {...formInput}
+                });
+
+                setFormInput({
+                    from_name: "",
+                    from_email: "",
+                    subject: "",
+                    message: ""
+                })
+            } catch (err) {
+                console.error(err);
+            }            
         }
     }
 
@@ -96,9 +109,16 @@ const AddClass = () => {
                 header='Class Submitted'
                 content="Your class has been added!"
             />
+            {error && (
+                <Message
+                error
+                header='Submit Error'
+                content={error.message}
+              />
+            )}
             <Button type='submit' onClick={handleFormSubmit}>Submit</Button>
         </Form>
     );
 }
 
-export default AddClass
+export default AddClassForm
