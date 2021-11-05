@@ -1,15 +1,24 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
-import {} from 'semantic-ui-react';
+import { Loader, Header, Label } from 'semantic-ui-react';
 
 import { QUERY_ME } from '../utils/queries';
+
+import AuthService from '../utils/auth';
 
 function AccountPage() {
     const { loading, error, data } = useQuery(QUERY_ME);
 
+    if (loading) return <Loader />
+    if (!AuthService.isLoggedIn()) return <Redirect to="/" />
+    if (error) return error.message;
+
+    const { me } = data;
     return (
         <div className="account-page">
-            Account Page
+            <Header as='h2'>{me.username}</Header>
+            <Label>Average Rating: {me.averageRating}</Label>
         </div>
     )
 }
