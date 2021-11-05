@@ -1,9 +1,8 @@
 import React, {useState} from 'react'
 import { Button, Dropdown, Message, Form } from 'semantic-ui-react'
-import { useMutation } from '@apollo/client'
+import { useMutation, useQuery } from '@apollo/client'
+import { QUERY_CATEGORIES } from '../../utils/queries'
 import { CREATE_CLASS } from '../../utils/mutations'
-
-const categories = [] //Retrieve categories from backend here.
 
 const AddClassForm = () => {
     const [formInput, setFormInput] = useState({
@@ -14,10 +13,25 @@ const AddClassForm = () => {
         category: "",
     });
 
+    //Create Class in DB
     const [addClass, { error }] = useMutation(CREATE_CLASS)
+    //Retrieve categories from backend here.
+    const {loading, data} = useQuery(QUERY_CATEGORIES)
+
+    const categories = data?.map(el => (
+        {
+            key: data.name,
+            text: data.name,
+            value: data._id
+        }
+    ))
 
     const handleInputChange = (event) => {
         setFormInput({...formInput, [event.target.name]: event.target.value})
+    }
+
+    const handleDropdownChange = (event) => {
+        setFormInput({...formInput, category: event.target.value})
     }
 
     function costIsValid (cost) {
@@ -100,8 +114,7 @@ const AddClassForm = () => {
                     fluid
                     selection
                     options={categories}
-                    value={formInput.category}
-                    onChange={handleInputChange}
+                    onChange={handleDropdownChange}
                 />
             </Form.Field>
             <Message
