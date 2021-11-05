@@ -13,8 +13,6 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Header from './components/Header'
 import homePage from './pages/homePage';
 import Footer from './components/Footer';
-import Login from './components/login/login'
-import Register from './components/login/register'
 
 //Import Semantic UI CSS for all components and pages to use
 import 'semantic-ui-css/semantic.min.css'
@@ -50,8 +48,6 @@ function App() {
           <Header />
           <Switch>
             <Route exact path='/' component={homePage} />
-            <Route exact path='/login' component={Login} />
-            <Route exact path='/register' component={Register} />
           </Switch>
           <Footer />
         </>
