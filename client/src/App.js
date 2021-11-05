@@ -12,7 +12,10 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 //Import Components and Pages
 import Header from './components/Header'
 import homePage from './pages/homePage';
+import AccountPage from './pages/accountPage';
 import Footer from './components/Footer';
+import Login from './components/Login'
+import Register from './components/Register';
 import AddClass from './components/AddClass/addClass'
 
 
@@ -50,6 +53,9 @@ function App() {
           <Header />
           <Switch>
             <Route exact path='/' component={homePage} />
+            <Route exact path='/login' component={Login} />
+            <Route exact path='/register' component={Register} />
+            <Route  exact path='/account' component={AccountPage} />
           </Switch>
           <Footer />
         </>
