@@ -13,17 +13,18 @@ module.exports = {
 
         if (!token) {
             return req;
+        } else {
+            // verify token and get user data out of it
+            try {
+                const { data } = jwt.verify(token, process.env.ACCESS_SECRET_TOKEN, { expiresIn });
+                req.user = data;
+                return req
+            } catch {
+                console.log('Invalid token');
+            }
         }
 
-        // verify token and get user data out of it
-        try {
-            const { data } = jwt.verify(token, process.env.ACCESS_SECRET_TOKEN, { expiresIn });
-            req.user = data;
-        } catch {
-            console.log('Invalid token');
-        }
 
-        return req;
     },
     //Determine what data is being added to token
     signToken: function ({ email, username, _id }) {
