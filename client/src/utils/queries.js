@@ -77,6 +77,7 @@ export const QUERY_USER = gql`
             createdClasses {
                 _id
                 title
+                description
                 author {
                     _id
                     username
@@ -85,6 +86,7 @@ export const QUERY_USER = gql`
             joinedClasses {
                 _id
                 title
+                description
                 author {
                     _id
                     username
@@ -112,6 +114,7 @@ export const QUERY_ME = gql`
             createdClasses {
                 _id
                 title
+                description
                 author {
                     _id
                     username
@@ -120,6 +123,7 @@ export const QUERY_ME = gql`
             joinedClasses {
                 _id
                 title
+                description
                 author {
                     _id
                     username
