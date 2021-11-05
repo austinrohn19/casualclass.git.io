@@ -55,6 +55,7 @@ export const QUERY_CLASS = gql`
 export const QUERY_CATEGORIES = gql`
     query categories {
         category {
+            _id
             name
         }
     }
@@ -65,8 +66,22 @@ export const QUERY_USER = gql`
         user(_id: $_id) {
             username
             email
-            userRatings
-            createdClasses
+            userRatings {
+                _id
+                user {
+                    _id
+                    username
+                }
+                value
+            }
+            createdClasses {
+                _id
+                title
+                author {
+                    _id
+                    username
+                }
+            }
             averageRating
         }
     }
@@ -74,11 +89,28 @@ export const QUERY_USER = gql`
 
 export const QUERY_ME = gql`
     query me {
-        username 
-        email
-        userRatings
-        createdClasses
-        averageRating
+        me {
+            _id
+            username 
+            email
+            userRatings {
+                _id
+                user {
+                    _id
+                    username
+                }
+                value
+            }
+            createdClasses {
+                _id
+                title
+                author {
+                    _id
+                    username
+                }
+            }
+            averageRating
+        }
     }
 `
 
