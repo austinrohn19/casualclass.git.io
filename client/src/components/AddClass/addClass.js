@@ -18,11 +18,11 @@ const AddClassForm = () => {
     //Retrieve categories from backend here.
     const {loading, data} = useQuery(QUERY_CATEGORIES)
 
-    const categories = data?.map(el => (
+    const categories = data?.categories.map(el => (
         {
-            key: data.name,
-            text: data.name,
-            value: data._id
+            key: el.name,
+            text: el.name,
+            value: el._id
         }
     ))
 
@@ -30,8 +30,8 @@ const AddClassForm = () => {
         setFormInput({...formInput, [event.target.name]: event.target.value})
     }
 
-    const handleDropdownChange = (event) => {
-        setFormInput({...formInput, category: event.target.value})
+    const handleDropdownChange = (event, data) => {
+        setFormInput({...formInput, [data.name]: data.value})
     }
 
     function costIsValid (cost) {
@@ -54,6 +54,7 @@ const AddClassForm = () => {
 
     const handleFormSubmit = async (event) => {
         event.preventDefault();
+        console.log(formInput)
 
         if (formIsValid(formInput)) {
             //add class mutation
@@ -63,11 +64,14 @@ const AddClassForm = () => {
                 });
 
                 setFormInput({
-                    from_name: "",
-                    from_email: "",
-                    subject: "",
-                    message: ""
-                })
+                    title: "",
+                    description: "",
+                    previewVideoUrl: "",
+                    cost: "",
+                    category: "",
+                });
+
+                
             } catch (err) {
                 console.error(err);
             }            
@@ -80,6 +84,7 @@ const AddClassForm = () => {
                 <label>Title</label>
                 <input 
                     placeholder='Title'
+                    name='title'
                     value={formInput.title}
                     onChange={handleInputChange}
                 />
@@ -88,6 +93,7 @@ const AddClassForm = () => {
                 <label>Description</label>
                 <input 
                     placeholder='Description'
+                    name='description'
                     value={formInput.description}
                     onChange={handleInputChange}
                 />
@@ -96,6 +102,7 @@ const AddClassForm = () => {
                 <label>Video URL</label>
                 <input 
                     placeholder='Video URL'
+                    name='previewVideoUrl'
                     value={formInput.previewVideoUrl}
                     onChange={handleInputChange}
                 />
@@ -104,6 +111,7 @@ const AddClassForm = () => {
                 <label>Cost</label>
                 <input 
                     placeholder='Cost'
+                    name='cost'
                     value={formInput.cost}
                     onChange={handleInputChange}
                 />
@@ -111,6 +119,7 @@ const AddClassForm = () => {
             <Form.Field>
                 <Dropdown
                     placeholder='Select Category'
+                    name='category'
                     fluid
                     selection
                     options={categories}

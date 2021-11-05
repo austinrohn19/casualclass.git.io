@@ -66,7 +66,7 @@ export const CREATE_CATEGORY = gql`
 
 export const CREATE_CLASS = gql`
     mutation createClass($title: String!, $author: ID!, $description: String!, $previewVideoUrl: String!, $cost: Float!, $category: ID!) {
-        createClass(title: $title, author: $author, description: $description, previewVideoUrl: $previewVideoUrl, cost: $cost, category: $category) {
+        createClass(title: $title, description: $description, previewVideoUrl: $previewVideoUrl, cost: $cost, category: $category) {
             class {
                 title
                 author

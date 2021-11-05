@@ -54,7 +54,7 @@ export const QUERY_CLASS = gql`
 
 export const QUERY_CATEGORIES = gql`
     query categories {
-        category {
+        categories {
             _id
             name
         }
@@ -75,6 +75,7 @@ export const QUERY_USER = gql`
 
 export const QUERY_ME = gql`
     query me {
+        _id
         username 
         email
         userRatings

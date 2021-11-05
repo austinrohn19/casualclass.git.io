@@ -15,6 +15,7 @@ import homePage from './pages/homePage';
 import Footer from './components/Footer';
 import Login from './components/login/login'
 import Register from './components/login/register'
+import AddClass from './components/AddClass/addClass'
 
 //Import Semantic UI CSS for all components and pages to use
 import 'semantic-ui-css/semantic.min.css'
