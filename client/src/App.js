@@ -54,7 +54,7 @@ function App() {
           <Switch>
             <Route exact path='/' component={homePage} />
             <Route  exact path='/account' component={AccountPage} />
-            <Route exact path='/add-class' component={AddClass} />
+            <Route exact path='/create-class' component={AddClass} />
           </Switch>
           <Footer />
         </>
