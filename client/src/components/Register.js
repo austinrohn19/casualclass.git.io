@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Button, Input } from "semantic-ui-react";
+import { Form, Button, Input, Message } from "semantic-ui-react";
 
 import { useMutation } from '@apollo/client'
 import { CREATE_USER } from '../utils/mutations'
@@ -9,8 +9,8 @@ import Auth from '../utils/auth'
 const Register = (props) => {
 
   const [userFormData, setUserFormData] = useState({ username: '', email: '', password: '' })
-
   const [createUser, { error, data }] = useMutation(CREATE_USER)
+  const [errorMessage, setErrorMessage] = useState(false)
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -29,9 +29,9 @@ const Register = (props) => {
       Auth.login(data.createUser.token);
 
       props.closeModal(false)
-      
+
     } catch (err) {
-      console.error(err);
+      setErrorMessage(true)
     }
 
     setUserFormData({
@@ -43,8 +43,13 @@ const Register = (props) => {
 
   return (
     <>
-      <Form size={'massive'} onSubmit={handleFormSubmit}>
-      <Form.Group>
+      <Form error={errorMessage} size={'massive'} onSubmit={handleFormSubmit}>
+        <Message
+          error
+          header='Error'
+          content='Error adding this user'
+        />
+        <Form.Group>
           <Form.Field
             control={Input}
             name='username'
@@ -63,7 +68,7 @@ const Register = (props) => {
           />
         </Form.Group>
         <Form.Group>
-          <Form.Input 
+          <Form.Input
             label='Password'
             type='password'
             name='password'

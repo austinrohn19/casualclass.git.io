@@ -1,6 +1,6 @@
 /* eslint-disable no-useless-constructor */
 import React, { useState } from "react";
-import { Form, Input, Button } from 'semantic-ui-react'
+import { Form, Input, Button, Message } from 'semantic-ui-react'
 
 import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../utils/mutations';
@@ -10,6 +10,7 @@ const Login = (props) => {
 
   const [userFormData, setUserFormData] = useState({ email: '', password: '' });
   const [loginUser, { error, data }] = useMutation(LOGIN_USER);
+  const [errorMessage, setErrorMessage] = useState(false)
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -29,7 +30,7 @@ const Login = (props) => {
       props.closeModal(false)
 
     } catch (error) {
-      console.log(error);
+      setErrorMessage(true)
     }
 
     setUserFormData({
@@ -40,9 +41,15 @@ const Login = (props) => {
 
   return (
     <>
-      <Form size={'massive'} onSubmit={handleFormSubmit}>
+      <Form error={errorMessage} size={'massive'} onSubmit={handleFormSubmit}>
+        <Message
+          error
+          header='Invalid Login'
+          content='Incorrect Username or Password'
+        />
         <Form.Group>
           <Form.Field
+            required
             control={Input}
             name='email'
             label='E-Mail'
@@ -51,7 +58,8 @@ const Login = (props) => {
           />
         </Form.Group>
         <Form.Group>
-          <Form.Input 
+          <Form.Input
+            required
             label='Password'
             type='password'
             name='password'
