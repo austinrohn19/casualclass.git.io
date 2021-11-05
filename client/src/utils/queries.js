@@ -82,6 +82,14 @@ export const QUERY_USER = gql`
                     username
                 }
             }
+            joinedClasses {
+                _id
+                title
+                author {
+                    _id
+                    username
+                }
+            }
             averageRating
         }
     }
@@ -102,6 +110,14 @@ export const QUERY_ME = gql`
                 value
             }
             createdClasses {
+                _id
+                title
+                author {
+                    _id
+                    username
+                }
+            }
+            joinedClasses {
                 _id
                 title
                 author {

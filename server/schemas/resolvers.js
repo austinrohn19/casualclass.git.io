@@ -188,7 +188,7 @@ const resolvers = {
             if (!user) {
                 throw new AuthenticationError('Unauthorized action');
             }
-            const joinedClass = await Class.findOne({ classId })
+            const joinedClass = await Class.findById(classId)
                 .populate([
                     {
                         path: 'author',

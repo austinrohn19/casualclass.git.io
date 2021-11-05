@@ -3,6 +3,8 @@ import { Redirect } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { Loader, Header, Label } from 'semantic-ui-react';
 
+import RegisteredClassList from '../components/RegisteredClassList/RegisteredClassList';
+
 import { QUERY_ME } from '../utils/queries';
 
 import AuthService from '../utils/auth';
@@ -19,6 +21,7 @@ function AccountPage() {
         <div className="account-page">
             <Header as='h2'>{me.username}</Header>
             <Label>Average Rating: {me.averageRating}</Label>
+            <RegisteredClassList joinedClasses={me.joinedClasses} />
         </div>
     )
 }
