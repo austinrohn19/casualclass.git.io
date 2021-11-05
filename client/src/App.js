@@ -53,9 +53,8 @@ function App() {
           <Header />
           <Switch>
             <Route exact path='/' component={homePage} />
-            <Route exact path='/login' component={Login} />
-            <Route exact path='/register' component={Register} />
             <Route  exact path='/account' component={AccountPage} />
+            <Route exact path='/create-class' component={AddClass} />
           </Switch>
           <Footer />
         </>
