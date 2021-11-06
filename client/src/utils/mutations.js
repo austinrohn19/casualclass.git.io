@@ -65,8 +65,8 @@ export const CREATE_CATEGORY = gql`
 `
 
 export const CREATE_CLASS = gql`
-    mutation createClass($title: String!, $description: String!, $previewVideoUrl: String!, $cost: Float!, $category: ID!) {
-        createClass(title: $title, description: $description, previewVideoUrl: $previewVideoUrl, cost: $cost, category: $category) {
+    mutation createClass($title: String!, $description: String!, $previewVideoUrl: String!, $previewImageUrl: String! $cost: Float!, $category: ID!) {
+        createClass(title: $title, description: $description, previewVideoUrl: $previewVideoUrl, previewImageUrl: $previewImageUrl, cost: $cost, category: $category) {
             title
             author {
                 username
@@ -79,3 +79,5 @@ export const CREATE_CLASS = gql`
         }
     }
 `
+
+

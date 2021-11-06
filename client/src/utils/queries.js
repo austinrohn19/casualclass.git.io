@@ -2,7 +2,8 @@ import { gql } from '@apollo/client'
 
 export const QUERY_CLASSES = gql`
     query classes {
-        class {
+        classes {
+            _id
             title
             author {
                 username
@@ -10,11 +11,14 @@ export const QUERY_CLASSES = gql`
             }
             description
             previewVideoUrl
+            previewImageUrl
             category {
                 name
             }
             reviews {
-                author
+                author {
+                    username
+                }
                 rating
                 text
                 createdOn
