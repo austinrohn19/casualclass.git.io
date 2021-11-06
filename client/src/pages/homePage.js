@@ -10,13 +10,13 @@ import { QUERY_CLASSES } from '../utils/queries'
 
 const HomePage = () => {
 
-    const [ searchInput, setSearchInput ] = useState({ 
-        title: '', 
+    const [searchInput, setSearchInput] = useState({
+        title: '',
         category: ''
     })
 
     const { loading, data } = useQuery(QUERY_CLASSES, {
-        variables: {...searchInput}
+        variables: { ...searchInput }
     })
 
     return (
@@ -30,18 +30,26 @@ const HomePage = () => {
                     {loading ? (
                         <div>Loading...</div>
                     ) : (
-                        <Card.Group>
-                            {data.classes.map((lesson, index) => {
-                                return (
-                                    <LessonCard key={index} lessonInfo={lesson} />
-                                )
-                            })}
-                        </Card.Group>
+                        <>
+                            {data.classes.length ? (
+                                <Card.Group>
+                                    {data.classes.map((lesson, index) => {
+                                        return (
+                                            <LessonCard key={index} lessonInfo={lesson} />
+                                        )
+                                    })}
+                                </Card.Group>
+                            ) :
+                                (
+                                    <div>No Classes Found Matching this search</div>
+                                )}
+                        </>
+
                     )}
 
                 </Grid.Column>
                 <Grid.Column mobile={16} tablet={3} computer={3} floated='right'>
-                    <SearchForm search={setSearchInput}/>
+                    <SearchForm search={setSearchInput} />
                 </Grid.Column>
             </Grid>
         </>
