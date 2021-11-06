@@ -1,9 +1,11 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { Grid, Card } from 'semantic-ui-react'
+import { Grid, Card, Button } from 'semantic-ui-react'
 
-import { useQuery } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_CLASS } from '../utils/queries';
+import { JOIN_CLASS } from '../utils/mutations'
+import Auth from '../utils/auth'
 
 import VideoPlayer from '../components/VideoPlayer'
 
@@ -14,6 +16,19 @@ function ClassPage() {
     const { loading, data } = useQuery(QUERY_CLASS, {
         variables: { id: id }
     })
+
+    const [joinClass, { error }] = useMutation(JOIN_CLASS)
+
+    const handleSubscribe = async() => {
+
+        try {
+            const { data } = joinClass({
+                variables: { classId: id }
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     return (
         <>
@@ -31,11 +46,17 @@ function ClassPage() {
                             <Card.Description>Created By: {data.class.author.username}</Card.Description>
                             <Card.Description>{data.class.description}</Card.Description>
                         </Card.Content>
+                        <Card.Content>
+                            {Auth.loggedIn() ? (
+                                <Button onClick={handleSubscribe}>Subscribe</Button>
+                            ) : (
+                                <Card.Header>You must be logged in to subscribe</Card.Header>
+                            )}
+                        </Card.Content>
                     </Card>
                 </Grid.Column>
             </Grid>
             )}
-
         </>
     )
 }

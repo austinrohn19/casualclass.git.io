@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client'
 
 export const QUERY_CLASSES = gql`
-    query classes {
-        classes {
+    query classes($category: ID, $title: String, $sortBy: String) {
+        classes(category: $category, title: $title, sortBy: $sortBy) {
             _id
             title
             author {
