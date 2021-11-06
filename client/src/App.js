@@ -14,9 +14,8 @@ import Header from './components/Header'
 import homePage from './pages/homePage';
 import AccountPage from './pages/accountPage';
 import Footer from './components/Footer';
-import Login from './components/Login'
-import Register from './components/Register';
 import AddClass from './components/AddClass/addClass'
+import ClassPage from './pages/classpage'
 
 
 //Import Semantic UI CSS for all components and pages to use
@@ -55,6 +54,7 @@ function App() {
             <Route exact path='/' component={homePage} />
             <Route  exact path='/account' component={AccountPage} />
             <Route exact path='/create-class' component={AddClass} />
+            <Route exact path='/class/:id' component={ClassPage} />
           </Switch>
           <Footer />
         </>
