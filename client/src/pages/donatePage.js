@@ -1,8 +1,12 @@
 import React from 'react';
 
+import DonateForm from '../components/DonationForm/DonationForm';
+
 function DonatePage() {
     return (
-        <div className="donate-page"></div>
+        <div className="donate-page">
+            <DonateForm />
+        </div>
     )
 }
 
