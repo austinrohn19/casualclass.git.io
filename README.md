@@ -19,12 +19,12 @@ The pandemic affected everyone globally in many different ways. During lockdowns
 
 ## Screenshots
 
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
+![App Screenshot](app-screenshot.png)
 
 
 ## Deployment
 
-View this projects deployment at www.deployedproject.com
+View this projects deployment at https://intense-stream-43851.herokuapp.com/
 ## Badges
 
 [![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/tterb/atomic-design-ui/blob/master/LICENSEs)
