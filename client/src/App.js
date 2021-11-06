@@ -13,6 +13,8 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Header from './components/Header'
 import homePage from './pages/homePage';
 import AccountPage from './pages/accountPage';
+import DonatePage from './pages/donatePage';
+import SuccessfulDonationPage from './pages/successfulDonationPage';
 import Footer from './components/Footer';
 import AddClass from './components/AddClass/addClass'
 import ClassPage from './pages/classpage'
@@ -55,6 +57,8 @@ function App() {
             <Route  exact path='/account' component={AccountPage} />
             <Route exact path='/create-class' component={AddClass} />
             <Route exact path='/class/:id' component={ClassPage} />
+            <Route exact path='/donate' component={DonatePage} />
+            <Route exact path='/success' component={SuccessfulDonationPage} />
           </Switch>
           <Footer />
         </>

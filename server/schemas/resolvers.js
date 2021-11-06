@@ -1,4 +1,6 @@
 const { AuthenticationError } = require('apollo-server-express');
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
+
 const { 
     User,
     UserRating,
@@ -155,6 +157,35 @@ const resolvers = {
 
             }
             return null;
+        },
+
+        checkout: async (parent, { donationAmount }, context) => {
+            const url = new URL(context.headers.referer).origin;
+
+            const product = await stripe.products.create({
+                name: `$${donationAmount} Donation`
+            });
+
+            const price = await stripe.prices.create({
+                product: product.id,
+                unit_amount: donationAmount * 100,
+                currency: 'usd'
+            });
+
+            const line_items = [{
+                price: price.id,
+                quantity: 1
+            }];
+
+            const session = await stripe.checkout.sessions.create({
+                payment_method_types: ['card'],
+                line_items,
+                mode: 'payment',
+                success_url: `${url}/success?session_id={CHECKOUT_SESSION_ID}`,
+                cancel_url: `${url}/`
+            });
+
+            return { session: session.id };
         }
     },
 
