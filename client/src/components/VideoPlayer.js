@@ -1,9 +1,14 @@
 import React from 'react'
+import { Container } from 'semantic-ui-react'
 
-const VideoPlayer = (props) => {
+import ResponsiveEmbed from 'react-responsive-embed'
+
+
+
+const VideoPlayer = ({ url }) => {
 
     return (
-        <iframe width="1280" height="720" src="https://www.youtube.com/embed/Gv5obGtlX2Y" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+        <ResponsiveEmbed src={url} />
     )
 }
 
