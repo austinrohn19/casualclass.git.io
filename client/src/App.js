@@ -13,6 +13,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Header from './components/Header'
 import homePage from './pages/homePage';
 import AccountPage from './pages/accountPage';
+import ClassPage from './pages/classpage';
 import Footer from './components/Footer';
 import Login from './components/Login'
 import Register from './components/Register';
@@ -55,6 +56,7 @@ function App() {
             <Route exact path='/' component={homePage} />
             <Route  exact path='/account' component={AccountPage} />
             <Route exact path='/create-class' component={AddClass} />
+            <Route exact path='/video-class/:id' component={ClassPage} />
           </Switch>
           <Footer />
         </>
