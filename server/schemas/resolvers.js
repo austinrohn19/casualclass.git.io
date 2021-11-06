@@ -1,7 +1,7 @@
 const { AuthenticationError } = require('apollo-server-express');
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 
-const { 
+const {
     User,
     UserRating,
     Class,
@@ -13,8 +13,10 @@ const { signToken } = require('../utils/auth');
 
 const resolvers = {
     Query: {
-        classes: async (parent, { category, sortBy }) => {
-            const findParams = category ? { category } : {}
+        classes: async (parent, { title, category, sortBy }) => {
+            const findParams = {}
+            if (category) findParams.category = category
+            if (title) findParams.title = { $regex: `^${title}`, $options: 'i' }
             return await Class.find(findParams)
                 .populate([
                     {
@@ -28,11 +30,11 @@ const resolvers = {
                         path: 'category'
                     },
                     {
-                        path:'reviews',
+                        path: 'reviews',
                         populate: {
                             path: 'author'
                         }
-                    }           
+                    }
                 ])
                 .sort(sortBy ? sortBy : 'createdOn');
         },
@@ -51,11 +53,11 @@ const resolvers = {
                         path: 'category'
                     },
                     {
-                        path:'reviews',
+                        path: 'reviews',
                         populate: {
                             path: 'author'
                         }
-                    }           
+                    }
                 ]);
         },
 
@@ -67,14 +69,14 @@ const resolvers = {
             return await User.findById(id)
                 .populate([
                     {
-                        path:'userRatings',
+                        path: 'userRatings',
                         populate: {
                             path: 'user'
                         }
                     },
                     {
                         path: 'createdClasses',
-                        populate : [
+                        populate: [
                             {
                                 path: 'author',
                             },
@@ -82,11 +84,11 @@ const resolvers = {
                                 path: 'category'
                             },
                             {
-                                path:'reviews',
+                                path: 'reviews',
                                 populate: {
                                     path: 'author'
                                 }
-                            }           
+                            }
                         ]
                     },
                     {
@@ -99,11 +101,11 @@ const resolvers = {
                                 path: 'category'
                             },
                             {
-                                path:'reviews',
+                                path: 'reviews',
                                 populate: {
                                     path: 'author'
                                 }
-                            }           
+                            }
                         ]
                     }
                 ]);
@@ -114,14 +116,14 @@ const resolvers = {
                 return await User.findById(user._id)
                     .populate([
                         {
-                            path:'userRatings',
+                            path: 'userRatings',
                             populate: {
                                 path: 'user'
                             }
                         },
                         {
                             path: 'createdClasses',
-                            populate : [
+                            populate: [
                                 {
                                     path: 'author',
                                 },
@@ -129,11 +131,11 @@ const resolvers = {
                                     path: 'category'
                                 },
                                 {
-                                    path:'reviews',
+                                    path: 'reviews',
                                     populate: {
                                         path: 'author'
                                     }
-                                }           
+                                }
                             ]
                         },
                         {
@@ -146,11 +148,11 @@ const resolvers = {
                                     path: 'category'
                                 },
                                 {
-                                    path:'reviews',
+                                    path: 'reviews',
                                     populate: {
                                         path: 'author'
                                     }
-                                }           
+                                }
                             ]
                         }
                     ]);
@@ -194,20 +196,20 @@ const resolvers = {
         createUser: async (parent, { username, email, password }) => {
             const user = await User.create({ username, email, password });
             const token = signToken(user);
-            
+
             return { token, user };
         },
 
         login: async (parent, { email, password }) => {
             const user = await User.findOne({ email });
 
-            if(!user) {
+            if (!user) {
                 throw new AuthenticationError('No user with this email found!');
             }
 
             const correctPassword = await user.checkPassword(password);
 
-            if(!correctPassword) {
+            if (!correctPassword) {
                 throw new AuthenticationError('Incorrect password!');
             }
 
@@ -232,11 +234,11 @@ const resolvers = {
                         path: 'category'
                     },
                     {
-                        path:'reviews',
+                        path: 'reviews',
                         populate: {
                             path: 'author'
                         }
-                    }           
+                    }
                 ]);
 
             await user.joinClass(joinedClass);
@@ -258,14 +260,14 @@ const resolvers = {
             const ratedUser = await User.findById(ratedUserId)
                 .populate([
                     {
-                        path:'userRatings',
+                        path: 'userRatings',
                         populate: {
                             path: 'user'
                         }
                     },
                     {
                         path: 'createdClasses',
-                        populate : [
+                        populate: [
                             {
                                 path: 'author',
                             },
@@ -273,11 +275,11 @@ const resolvers = {
                                 path: 'category'
                             },
                             {
-                                path:'reviews',
+                                path: 'reviews',
                                 populate: {
                                     path: 'author'
                                 }
-                            }           
+                            }
                         ]
                     },
                     {
@@ -290,11 +292,11 @@ const resolvers = {
                                 path: 'category'
                             },
                             {
-                                path:'reviews',
+                                path: 'reviews',
                                 populate: {
                                     path: 'author'
                                 }
-                            }           
+                            }
                         ]
                     }
                 ]);
@@ -324,7 +326,7 @@ const resolvers = {
             await author.addCreatedClass(newClass);
             return newClass;
         },
-        
+
         // Review mutations
         createReview: async (parent, args, { user }) => {
             if (!user) {
@@ -342,14 +344,14 @@ const resolvers = {
                         path: 'author',
                         populate: [
                             {
-                                path:'userRatings',
+                                path: 'userRatings',
                                 populate: {
                                     path: 'user'
                                 }
                             },
                             {
                                 path: 'createdClasses',
-                                populate : [
+                                populate: [
                                     {
                                         path: 'author',
                                     },
@@ -357,11 +359,11 @@ const resolvers = {
                                         path: 'category'
                                     },
                                     {
-                                        path:'reviews',
+                                        path: 'reviews',
                                         populate: {
                                             path: 'author'
                                         }
-                                    }           
+                                    }
                                 ]
                             },
                             {
@@ -374,11 +376,11 @@ const resolvers = {
                                         path: 'category'
                                     },
                                     {
-                                        path:'reviews',
+                                        path: 'reviews',
                                         populate: {
                                             path: 'author'
                                         }
-                                    }           
+                                    }
                                 ]
                             }
                         ]
@@ -397,11 +399,11 @@ const resolvers = {
                                 path: 'category'
                             },
                             {
-                                path:'reviews',
+                                path: 'reviews',
                                 populate: {
                                     path: 'author'
                                 }
-                            }           
+                            }
                         ]
                     }
                 ]);
@@ -414,4 +416,4 @@ const resolvers = {
     }
 };
 
-module.exports =  resolvers;
+module.exports = resolvers;
