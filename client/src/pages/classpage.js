@@ -9,7 +9,6 @@ function ClassPage(lessonInfo) {
     const { loading, error, data } = useQuery(QUERY_ME);
     console.log(data)
 
-   
     return (
         <div className="ClassPage">
             
