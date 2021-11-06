@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Button, Card } from 'semantic-ui-react';
+import { Form, Button, Card, Dropdown } from 'semantic-ui-react';
 
 import { useQuery } from '@apollo/client'
 import { QUERY_CATEGORIES } from '../utils/queries'
@@ -10,8 +10,6 @@ const SearchForm = (props) => {
     const [formInput, setFormInput] = useState({
         title: '',
         category: '',
-        sortBy: ''
-
     })
 
     const { loading, data } = useQuery(QUERY_CATEGORIES, {
@@ -34,25 +32,35 @@ const SearchForm = (props) => {
         setFormInput({ ...formInput, [data.name]: data.value })
     }
 
-
-
+    const handleFormSubmit = (event) => {
+        props.search(formInput)
+    }
 
     return (
         <Card>
             <Card.Content>
+                <Card.Header>Search</Card.Header>
                 <Form>
-                    <Form.Group>
-                        <Form.Input label="Search" placeholder="What do you want to learn?" />
-                    </Form.Group>
-                    <Form.Group>
-                        <Form.Select label='Category' options={categories} placehholder='Category' />
-                    </Form.Group>
-                    <Form.Group>
-                        <Form.Input label='Tag' placeholder='search for a tag' />
-                    </Form.Group>
-                    <Form.Group>
-                        <Form.Field control={Button}>Submit</Form.Field>
-                    </Form.Group>
+                    <Form.Field>
+                        <label>Title</label>
+                        <input
+                            placeholder='Title'
+                            name='title'
+                            value={formInput.title}
+                            onChange={handleInputChange}
+                        />
+                    </Form.Field>
+                    <Form.Field>
+                        <Dropdown
+                            placeholder='Category'
+                            name='category'
+                            fluid
+                            selection
+                            options={categories}
+                            onChange={handleDropdownChange}
+                        />
+                    </Form.Field>
+                    <Button type='submit' onClick={handleFormSubmit}>Submit</Button>
                 </Form>
             </Card.Content>
         </Card>

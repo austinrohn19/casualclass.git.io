@@ -28,13 +28,9 @@ export const LOGIN_USER = gql`
 `
 
 export const JOIN_CLASS = gql`
-    mutation joinClass($userId: String!, $classId: String!) {
-        joinClass(userId: $userId, classId: $classId) {
-            class {
-                title
-                author
-                category
-            }
+    mutation joinClass($classId: ID!) {
+        joinClass(classId: $classId) {
+            title
         }
     }
 `

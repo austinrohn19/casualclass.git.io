@@ -4,8 +4,6 @@ import { Card, Image, Rating } from 'semantic-ui-react'
 
 const LessonCard = ({ lessonInfo }) => {
 
-    console.log(lessonInfo)
-
     const classLink = `/class/${lessonInfo._id}`
     return (
         <Card href={classLink}>
