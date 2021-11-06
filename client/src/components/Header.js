@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Menu, Image, Modal, Tab, Grid } from 'semantic-ui-react'
+import { Menu, Image, Modal, Tab, Grid, Button } from 'semantic-ui-react'
 import logo from '../assets/login.png';
 import { Link, } from 'react-router-dom';
 import Auth from '../utils/auth'
@@ -59,6 +59,11 @@ const Header = () => {
                     </>
                 )}
                 <Menu.Menu position='right'>
+                    <Menu.Item
+                        name="Donate"
+                    >
+                        <Button as="a" href="/donate" color="purple">Donate</Button>
+                    </Menu.Item>
                     {Auth.loggedIn() ? (
                         <>
                             <Menu.Item
