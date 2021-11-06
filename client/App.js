@@ -8,6 +8,7 @@ import {connect} from 'react-redux';
 import {youtubeLibraryLoaded} from './store/actions/api';
 import Trending from './containers/Trending/Trending';
 import Search from './containers/Search/Search';
+import AddClass from './components/AddClass/addClass'
 
 const API_KEY = process.env.REACT_APP_YT_API_KEY;
 
