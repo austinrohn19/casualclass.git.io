@@ -1,5 +1,5 @@
 import React from 'react';
-import { Header, Form } from 'semantic-ui-react';
+import { Header, Form, Grid } from 'semantic-ui-react';
 
 import DonationButton from '../DonationButton/DonationButton';
 
@@ -10,10 +10,32 @@ function DonationForm() {
         <React.Fragment>
             <Header as="h2">Make a Donation!</Header>
             <Form className="donation-form">
-                <DonationButton donationAmount={1} />
-                <DonationButton donationAmount={5} />
-                <DonationButton donationAmount={10} />
-                <DonationButton donationAmount={20} />
+                <Grid className="donation-btns">
+                    <Grid.Row>
+                        <Grid.Column width={3}>
+                            <DonationButton donationAmount={1} />
+                        </Grid.Column>
+                        <Grid.Column width={3}>
+                            <DonationButton donationAmount={5} />
+                        </Grid.Column>
+                    </Grid.Row>
+                    <Grid.Row>
+                        <Grid.Column width={3}>
+                            <DonationButton donationAmount={10} />
+                        </Grid.Column>
+                        <Grid.Column width={3}>
+                            <DonationButton donationAmount={20} />
+                        </Grid.Column>
+                    </Grid.Row>
+                    <Grid.Row>
+                        <Grid.Column width={3}>
+                            <DonationButton donationAmount={50} />
+                        </Grid.Column>
+                        <Grid.Column width={3}>
+                            <DonationButton donationAmount={100} />
+                        </Grid.Column>
+                    </Grid.Row>
+                </Grid>
             </Form>
         </React.Fragment>
     )

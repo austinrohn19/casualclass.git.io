@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react';
 import { useLazyQuery } from '@apollo/client';
-import { loadStripe } from '@stripe/stripe-js';
 import { Button } from 'semantic-ui-react';
 
 import { QUERY_CHECKOUT } from '../../utils/queries';
 
 import './DonationButton.scss';
 
-const stripePromise = loadStripe('pk_test_51JsZWdC8beZ8JNQHSstkmD0hVhQMwckPC8NMry8bJiaWDhEGCdezAOI7f9tncBSUo4T01bfwZfftQOcdGt0wyXG200La39BRoj');
+import stripePromise from '../../utils/stripe-promise';
 
 function DonationButton({ donationAmount }) {
     const [getCheckout, { data }] = useLazyQuery(QUERY_CHECKOUT);

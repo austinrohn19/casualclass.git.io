@@ -26,7 +26,7 @@ module.exports = {
             }
         }
 
-
+        return req;
     },
     //Determine what data is being added to token
     signToken: function ({ email, username, _id }) {
