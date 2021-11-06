@@ -55,8 +55,9 @@ const AddClassForm = () => {
 
     const handleFormSubmit = async (event) => {
         event.preventDefault();
-        console.log(formInput)
-
+        
+        formInput.cost = parseFloat(formInput.cost);
+        
         if (formIsValid(formInput)) {
             //add class mutation
             try {
