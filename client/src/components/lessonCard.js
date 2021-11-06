@@ -6,7 +6,7 @@ const LessonCard = ({ lessonInfo }) => {
 
     console.log(lessonInfo)
 
-    const classLink = `/video-class/${lessonInfo._id}`
+    const classLink = `/class/${lessonInfo._id}`
     return (
         <Card href={classLink}>
             <Image fluid src={lessonInfo.previewImageUrl} />

@@ -31,8 +31,9 @@ export const QUERY_CLASSES = gql`
 `
 
 export const QUERY_CLASS = gql`
-    query class($_id: ID!) {
-        class(_id: $_id) {
+    query class($id: ID!) {
+        class(id: $id) {
+            _id
             title
             author {
                 username
@@ -44,7 +45,9 @@ export const QUERY_CLASS = gql`
                 name
             }
             reviews {
-                author
+                author {
+                    username
+                }
                 rating
                 text
                 createdOn
