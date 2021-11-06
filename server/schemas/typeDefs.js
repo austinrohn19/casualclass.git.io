@@ -24,6 +24,7 @@ const typeDefs = gql`
         author: User
         description: String
         previewVideoUrl: String
+        previewImageUrl: String
         cost: Float
         category: Category
         timesPurchased: Int
@@ -69,7 +70,7 @@ const typeDefs = gql`
         rateUser(ratedUserId: ID!, value: Int!): User
 
         createCategory(name: String!): Category
-        createClass(title: String!, description: String!, previewVideoUrl: String!, cost: Float!, category: ID!): Class
+        createClass(title: String!, description: String!, previewVideoUrl: String!, previewImageUrl: String! cost: Float!, category: ID!): Class
 
         createReview(classId: ID!, text: String!, rating: Int!): Review
     }

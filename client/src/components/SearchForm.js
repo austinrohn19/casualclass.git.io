@@ -1,14 +1,41 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Form, Button, Card } from 'semantic-ui-react';
 
+import { useQuery } from '@apollo/client'
+import { QUERY_CATEGORIES } from '../utils/queries'
 
-const SearchForm = () => {
 
-    const categoryOptions = [
-        { key: '1', text: 'Test1', value: 'Test1' },
-        { key: '2', text: 'Test2', value: 'Test2' },
-        { key: '3', text: 'Test3', value: 'Test3' },
-    ]
+const SearchForm = (props) => {
+
+    const [formInput, setFormInput] = useState({
+        title: '',
+        category: '',
+        sortBy: ''
+
+    })
+
+    const { loading, data } = useQuery(QUERY_CATEGORIES, {
+        variables: { ...formInput }
+    })
+
+    const categories = data?.categories.map(el => (
+        {
+            key: el.name,
+            text: el.name,
+            value: el._id
+        }
+    ))
+
+    const handleInputChange = (event) => {
+        setFormInput({ ...formInput, [event.target.name]: event.target.value })
+    }
+
+    const handleDropdownChange = (event, data) => {
+        setFormInput({ ...formInput, [data.name]: data.value })
+    }
+
+
+
 
     return (
         <Card>
@@ -18,7 +45,7 @@ const SearchForm = () => {
                         <Form.Input label="Search" placeholder="What do you want to learn?" />
                     </Form.Group>
                     <Form.Group>
-                        <Form.Select label='Category' options={categoryOptions} placehholder='Category' />
+                        <Form.Select label='Category' options={categories} placehholder='Category' />
                     </Form.Group>
                     <Form.Group>
                         <Form.Input label='Tag' placeholder='search for a tag' />

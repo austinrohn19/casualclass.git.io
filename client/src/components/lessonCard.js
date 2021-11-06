@@ -1,15 +1,18 @@
 import React from 'react'
 
-import { Card, Image } from 'semantic-ui-react'
+import { Card, Image, Rating } from 'semantic-ui-react'
 
 const LessonCard = ({ lessonInfo }) => {
 
+    console.log(lessonInfo)
+
+    const classLink = `/video-class/${lessonInfo._id}`
     return (
-        <Card>
+        <Card href={classLink}>
+            <Image fluid src={lessonInfo.previewImageUrl} />
             <Card.Content>
-                <Image  src='https://via.placeholder.com/300.png/09f/fff' />
                 <Card.Header>{lessonInfo.title}</Card.Header>
-                <Card.Meta>{lessonInfo.author}</Card.Meta>
+                <Card.Description>Author: {lessonInfo.author.username}</Card.Description>
                 <Card.Description>{lessonInfo.description}</Card.Description>
             </Card.Content>
         </Card>

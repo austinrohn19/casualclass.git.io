@@ -9,6 +9,7 @@ const AddClassForm = () => {
         title: "",
         description: "",
         previewVideoUrl: "",
+        previewImageUrl: "",
         cost: "",
         category: "",
     });
@@ -104,6 +105,15 @@ const AddClassForm = () => {
                     placeholder='Video URL'
                     name='previewVideoUrl'
                     value={formInput.previewVideoUrl}
+                    onChange={handleInputChange}
+                />
+            </Form.Field>
+            <Form.Field>
+                <label>Image URL</label>
+                <input 
+                    placeholder='Image URL'
+                    name='previewImageUrl'
+                    value={formInput.previewImageUrl}
                     onChange={handleInputChange}
                 />
             </Form.Field>

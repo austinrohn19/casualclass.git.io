@@ -16,6 +16,9 @@ const ClassSchema = new Schema({
     previewVideoUrl: {
         type: String
     },
+    previewImageUrl: {
+        type: String
+    },
     cost: {
         type: Number,
         required: true,
