@@ -69,9 +69,11 @@ const AddClassForm = () => {
                     title: "",
                     description: "",
                     previewVideoUrl: "",
-                    cost: "",
-                    category: "",
+                    previewImageUrl: "",
+                    cost: ""
                 });
+
+                window.location.assign('/account')
 
                 
             } catch (err) {
@@ -100,19 +102,27 @@ const AddClassForm = () => {
                     onChange={handleInputChange}
                 />
             </Form.Field>
+            <Message>
+                <Message.Header>Video Notes</Message.Header>
+                <p>At this time we are unable to host videos. Please include a youtube embed link for your videos.</p>
+            </Message>
             <Form.Field>
                 <label>Video URL</label>
                 <input 
-                    placeholder='Video URL'
+                    placeholder='https://www.youtube.com/embed/<Video Link>'
                     name='previewVideoUrl'
                     value={formInput.previewVideoUrl}
                     onChange={handleInputChange}
                 />
             </Form.Field>
+            <Message>
+                <Message.Header>Image Notes</Message.Header>
+                <p>At this time we are unable to host images. Please include a link where your image can be imported from.</p>
+            </Message>
             <Form.Field>
                 <label>Image URL</label>
                 <input 
-                    placeholder='Image URL'
+                    placeholder='https://example.com/imagelocation'
                     name='previewImageUrl'
                     value={formInput.previewImageUrl}
                     onChange={handleInputChange}
