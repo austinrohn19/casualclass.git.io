@@ -19,7 +19,7 @@
     "graphql": "^15.5.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.13.12",
-    "stripe": "^8.67.0"
+    "stripe": "^8.186.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.2"

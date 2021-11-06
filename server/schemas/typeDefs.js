@@ -51,12 +51,17 @@ const typeDefs = gql`
         user: User
     }
 
+    type Checkout {
+        session: ID
+    }
+
     type Query {
         classes(category: String, sortBy: String): [Class]
         class(id: ID!): Class
         categories: [Category]
         user(id: ID!): User
         me: User
+        checkout(donationAmount: Float!): Checkout
     }
 
     scalar Date
